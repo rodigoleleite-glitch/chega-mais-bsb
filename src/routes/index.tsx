@@ -380,6 +380,7 @@ function Index() {
             ].map((exp, i) => (
               <motion.div 
                 key={i}
+                variants={itemVariants}
                 whileHover={{ y: -10 }}
                 className="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-black/5 group"
               >
@@ -402,7 +403,7 @@ function Index() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
