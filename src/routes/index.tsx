@@ -60,8 +60,8 @@ function Index() {
             Existem mulheres como você procurando novas amizades, novas experiências e um lugar onde possam simplesmente chegar como são.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-[#4A3D66] text-white rounded-full font-medium text-lg hover:bg-[#3d3356] transition-all">Conheça as próximas experiências</button>
-            <button className="px-8 py-3 border border-white/40 text-white rounded-full font-medium text-lg hover:bg-white/10 transition-all">Nossa história</button>
+            <button className="px-8 py-3 bg-[#4A3D66] text-white rounded-full font-bold text-lg hover:bg-[#3d3356] transition-all">Conheça as próximas experiências</button>
+            <button className="px-8 py-3 border border-white/40 text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all">Nossa história</button>
           </div>
         </motion.div>
       </section>
@@ -69,7 +69,7 @@ function Index() {
       {/* Seção Talvez... */}
       <section className="py-24 px-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-serif text-center mb-16">Talvez você esteja procurando exatamente isso.</h2>
+          <h2 className="text-4xl md:text-5xl font-serif font-semibold text-center mb-16">Talvez você esteja procurando exatamente isso.</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: "Conhecer pessoas novas sem pressão.", icon: Users },
@@ -91,7 +91,7 @@ function Index() {
       {/* Nossa História */}
       <section className="py-24 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
         <div>
-          <h2 className="text-4xl font-serif mb-8">Por trás do Chega Mais existem mulheres.</h2>
+          <h2 className="text-4xl font-serif font-semibold mb-8">Por trás do Chega Mais existem mulheres.</h2>
           <p className="text-lg leading-relaxed text-[#666] mb-6">Somos quatro mulheres diferentes, com personalidades, sonhos e rotinas únicas. Mas acreditamos na mesma coisa: ninguém deveria precisar viver tudo sozinha.</p>
           <p className="text-lg leading-relaxed text-[#666] mb-8">O Chega Mais nasceu para ser um lugar onde mulheres possam chegar exatamente como são.</p>
         </div>
@@ -101,7 +101,7 @@ function Index() {
       {/* Momentos (Galeria) */}
       <section className="py-24 px-8 bg-white">
         <div className="max-w-7xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-serif mb-6">Momentos Chega Mais</h2>
+          <h2 className="text-4xl font-serif font-semibold mb-6">Momentos Chega Mais</h2>
           <p className="text-[#666]">Um pouco do que acontece em nossa comunidade.</p>
         </div>
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6">
@@ -116,7 +116,7 @@ function Index() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-[#4A3D66] font-semibold text-sm uppercase tracking-wider mb-4 block">Depoimentos</span>
-            <h2 className="text-4xl md:text-5xl font-serif">O que elas dizem</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-semibold">O que elas dizem</h2>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -153,7 +153,7 @@ function Index() {
       {/* Seção Como Funciona (Horizontal Apple Style) */}
       <section className="py-24 px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-serif text-center mb-20">Como chegar mais.</h2>
+          <h2 className="text-4xl md:text-5xl font-serif font-semibold text-center mb-20">Como chegar mais.</h2>
           
           <div className="relative">
             <div className="absolute top-1/2 left-0 w-full h-px bg-black/10 -translate-y-1/2 hidden lg:block" />
@@ -184,7 +184,7 @@ function Index() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div className="max-w-xl">
               <span className="text-[#4A3D66] font-semibold text-sm uppercase tracking-wider mb-4 block">Calendário</span>
-              <h2 className="text-4xl md:text-5xl font-serif">Nossas próximas experiências.</h2>
+              <h2 className="text-4xl md:text-5xl font-serif font-semibold">Nossas próximas experiências.</h2>
             </div>
             <a href="#" className="flex items-center gap-2 text-[#4A3D66] font-semibold border-b-2 border-[#4A3D66]/20 pb-1 hover:border-[#4A3D66] transition-all">
               Ver calendário completo <ArrowRight size={18} />
@@ -258,7 +258,7 @@ function Index() {
           <div className="w-20 h-20 bg-[#FAF8F6] rounded-full flex items-center justify-center mx-auto mb-10">
             <Sparkles className="text-[#4A3D66]" size={32} />
           </div>
-          <h2 className="text-4xl md:text-6xl font-serif mb-8 leading-tight">O próximo sorriso dessa comunidade pode ser o seu.</h2>
+          <h2 className="text-4xl md:text-6xl font-serif font-semibold mb-8 leading-tight">O próximo sorriso dessa comunidade pode ser o seu.</h2>
           <p className="text-xl text-[#666] mb-12 leading-relaxed">Não deixe para depois a conexão que você pode viver hoje. Estamos ansiosas para te conhecer.</p>
           <div className="flex flex-col md:flex-row gap-6 justify-center">
             <button className="px-10 py-5 bg-[#4A3D66] text-white rounded-full font-bold text-lg shadow-xl shadow-[#4A3D66]/20 hover:scale-105 transition-all">
