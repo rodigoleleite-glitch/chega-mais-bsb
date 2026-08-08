@@ -111,10 +111,164 @@ function Index() {
         </div>
       </section>
 
+      {/* Seção O Que Elas Dizem (Depoimentos) */}
+      <section className="py-24 px-8 bg-[#FAF8F6]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-[#4A3D66] font-semibold text-sm uppercase tracking-wider mb-4 block">Depoimentos</span>
+            <h2 className="text-4xl md:text-5xl font-serif">O que elas dizem</h2>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { name: "Mariana", text: "O Chega Mais mudou minha percepção de Brasília. Encontrei mulheres incríveis que hoje são minhas melhores amigas." },
+              { name: "Beatriz", text: "Eu tinha medo de ir sozinha, mas fui acolhida desde o primeiro minuto. É um ambiente realmente seguro e leve." },
+              { name: "Letícia", text: "Cada experiência é única. Não é apenas uma oficina, é um momento de reconexão comigo mesma e com as outras." }
+            ].map((testimonial, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white p-10 rounded-3xl shadow-sm border border-black/5 relative"
+              >
+                <Quote className="absolute top-8 right-8 text-[#4A3D66]/10" size={40} />
+                <div className="flex gap-1 mb-6 text-[#4A3D66]">
+                  {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
+                </div>
+                <p className="text-lg leading-relaxed text-[#4A3D66] mb-8 italic">"{testimonial.text}"</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-[#4A3D66]/10 rounded-full flex items-center justify-center font-serif text-[#4A3D66]">
+                    {testimonial.name[0]}
+                  </div>
+                  <span className="font-medium text-[#2D2926]">{testimonial.name}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Seção Como Funciona (Horizontal Apple Style) */}
+      <section className="py-24 px-8 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-serif text-center mb-20">Como chegar mais.</h2>
+          
+          <div className="relative">
+            <div className="absolute top-1/2 left-0 w-full h-px bg-black/10 -translate-y-1/2 hidden lg:block" />
+            <div className="grid lg:grid-cols-4 gap-12 lg:gap-8">
+              {[
+                { step: "01", title: "Escolha uma experiência", desc: "Navegue pelo nosso calendário e escolha a que mais combina com você.", icon: Coffee },
+                { step: "02", title: "Garanta seu lugar", desc: "As vagas são limitadas para garantir que todas se sintam acolhidas.", icon: Star },
+                { step: "03", title: "Chegue como você é", desc: "Não precisa conhecer ninguém. Venha aberta para o novo.", icon: Heart },
+                { step: "04", title: "Viva a conexão", desc: "Desfrute do momento e das novas amizades que surgirão.", icon: Sparkles }
+              ].map((item, i) => (
+                <div key={i} className="relative z-10 flex flex-col items-center text-center group">
+                  <div className="w-16 h-16 bg-white border-2 border-[#4A3D66] text-[#4A3D66] rounded-full flex items-center justify-center text-xl font-serif mb-8 group-hover:bg-[#4A3D66] group-hover:text-white transition-all duration-500">
+                    <item.icon size={24} />
+                  </div>
+                  <span className="text-xs font-bold tracking-widest text-[#4A3D66] mb-4 uppercase">{item.step}</span>
+                  <h3 className="text-xl font-serif mb-4">{item.title}</h3>
+                  <p className="text-[#666] leading-relaxed max-w-xs">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Seção Próximas Experiências */}
+      <section className="py-24 px-8 bg-[#FAF8F6]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div className="max-w-xl">
+              <span className="text-[#4A3D66] font-semibold text-sm uppercase tracking-wider mb-4 block">Calendário</span>
+              <h2 className="text-4xl md:text-5xl font-serif">Nossas próximas experiências.</h2>
+            </div>
+            <a href="#" className="flex items-center gap-2 text-[#4A3D66] font-semibold border-b-2 border-[#4A3D66]/20 pb-1 hover:border-[#4A3D66] transition-all">
+              Ver calendário completo <ArrowRight size={18} />
+            </a>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { 
+                title: "Café & Pintura", 
+                date: "24 de Agosto", 
+                loc: "Asa Norte", 
+                img: workshopAsset.url, 
+                tag: "Artes",
+                desc: "Uma manhã relaxante para soltar a criatividade." 
+              },
+              { 
+                title: "Trilha & Piquenique", 
+                date: "02 de Setembro", 
+                loc: "Parque da Cidade", 
+                img: smilingAsset.url, 
+                tag: "Outdoor",
+                desc: "Conexão com a natureza e com novas mulheres." 
+              },
+              { 
+                title: "Workshop de Cerâmica", 
+                date: "15 de Setembro", 
+                loc: "Lago Sul", 
+                img: workshopAsset.url, 
+                tag: "Manual",
+                desc: "Aprenda o toque do barro em um ambiente acolhedor." 
+              }
+            ].map((exp, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ y: -10 }}
+                className="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-black/5 group"
+              >
+                <div className="h-64 overflow-hidden relative">
+                  <img src={exp.img} alt={exp.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute top-6 left-6 px-4 py-1 bg-white/90 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider text-[#4A3D66]">
+                    {exp.tag}
+                  </div>
+                </div>
+                <div className="p-8">
+                  <div className="flex items-center gap-4 text-xs text-[#666] mb-4">
+                    <span className="flex items-center gap-1"><Calendar size={14} /> {exp.date}</span>
+                    <span className="flex items-center gap-1"><MapPin size={14} /> {exp.loc}</span>
+                  </div>
+                  <h3 className="text-2xl font-serif mb-4">{exp.title}</h3>
+                  <p className="text-[#666] leading-relaxed mb-8">{exp.desc}</p>
+                  <button className="w-full py-4 bg-[#4A3D66]/5 text-[#4A3D66] rounded-2xl font-semibold hover:bg-[#4A3D66] hover:text-white transition-all duration-300">
+                    Garantir minha vaga
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Faixa de Impacto */}
       <section className="py-24 bg-[#4A3D66] text-white text-center px-8">
           <h2 className="text-4xl md:text-6xl font-serif mb-6 leading-tight">Não é sobre o evento.<br/>É sobre o que acontece depois dele.</h2>
           <p className="text-xl font-light opacity-80 italic max-w-xl mx-auto">As melhores amizades geralmente começam quando alguém decide aceitar um convite.</p>
+      </section>
+
+      {/* CTA Final */}
+      <section className="py-32 px-8 bg-white text-center">
+        <div className="max-w-3xl mx-auto">
+          <div className="w-20 h-20 bg-[#FAF8F6] rounded-full flex items-center justify-center mx-auto mb-10">
+            <Sparkles className="text-[#4A3D66]" size={32} />
+          </div>
+          <h2 className="text-4xl md:text-6xl font-serif mb-8 leading-tight">O próximo sorriso dessa comunidade pode ser o seu.</h2>
+          <p className="text-xl text-[#666] mb-12 leading-relaxed">Não deixe para depois a conexão que você pode viver hoje. Estamos ansiosas para te conhecer.</p>
+          <div className="flex flex-col md:flex-row gap-6 justify-center">
+            <button className="px-10 py-5 bg-[#4A3D66] text-white rounded-full font-bold text-lg shadow-xl shadow-[#4A3D66]/20 hover:scale-105 transition-all">
+              Participar agora
+            </button>
+            <button className="px-10 py-5 border-2 border-[#4A3D66]/10 text-[#4A3D66] rounded-full font-bold text-lg hover:bg-[#4A3D66]/5 transition-all">
+              Falar conosco
+            </button>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
