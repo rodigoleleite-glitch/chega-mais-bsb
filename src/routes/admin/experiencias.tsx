@@ -40,7 +40,7 @@ function AdminExperiencias() {
       }
     };
     check();
-  }, []);
+  }, [checkAdminFn, getExperiencesFn, navigate]);
 
   const handleDelete = async (id: string) => {
     if (!confirm("Tem certeza que deseja excluir esta experiência?")) return;
@@ -63,7 +63,7 @@ function AdminExperiencias() {
         <div className="flex justify-between items-center mb-12">
           <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-4xl font-serif font-bold">Gerenciar Experiências</motion.h1>
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
-            <Button onClick={() => navigate({ to: "/admin/experiencias/nova" })} className="bg-[#7A3FF2] hover:bg-[#5E2CCF] text-white rounded-full px-6 py-6 flex items-center gap-2 font-bold shadow-lg">
+            <Button onClick={() => navigate({ to: "/admin/experiencias/nova" })} className="bg-[#7A3FF2] hover:bg-[#5E2CCF] text-white rounded-full px-6 py-6 flex items-center gap-2 font-bold shadow-lg h-auto">
               <Plus size={20} /> Nova Experiência
             </Button>
           </motion.div>
