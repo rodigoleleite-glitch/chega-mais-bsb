@@ -1,17 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import logoAsset from "@/assets/logo_purple.jpg.asset.json";
+import { checkIsAdmin } from "@/lib/experiences.functions";
+import { useServerFn } from "@tanstack/react-start";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isTransparentPage, setIsTransparentPage] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const checkAdminFn = useServerFn(checkIsAdmin);
 
   useEffect(() => {
     const checkPath = () => {
-      // Pages that should have a transparent navbar (white text) initially
-      // Only the homepage has a dark background hero.
-      // Experience listing and details have off-white backgrounds.
       setIsTransparentPage(window.location.pathname === "/");
     };
 
@@ -20,18 +20,17 @@ export function Navbar() {
     };
 
     checkPath();
+    checkAdminFn().then(setIsAdmin).catch(() => setIsAdmin(false));
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [checkAdminFn]);
 
-  // Determine text color based on scroll state and page
   const textColor = isScrolled || !isTransparentPage ? "text-[#1A1A1A]" : "text-white";
   const bgColor = isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm py-3" : "bg-transparent";
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${bgColor}`}
-    >
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 ${bgColor}`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <img 
@@ -47,6 +46,7 @@ export function Navbar() {
         <div className={`flex items-center gap-8 font-bold text-sm uppercase tracking-widest ${textColor}`}>
           <Link to="/" className="hover:text-[#7A3FF2] transition-colors">Sobre</Link>
           <Link to="/experiencias" className="hover:text-[#7A3FF2] transition-colors">Experiências</Link>
+          {isAdmin && <Link to="/admin/experiencias" className="hover:text-[#7A3FF2] transition-colors">Admin</Link>}
           <button className="hover:text-[#7A3FF2] transition-colors cursor-not-allowed opacity-50">Comunidade</button>
         </div>
 

@@ -1,246 +1,282 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useSpring, type Variants } from "framer-motion";
-import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, ChevronRight, Check } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
-
-import logoAsset from "@/assets/logo_purple.jpg.asset.json";
-import communityAsset from "@/assets/community_group.jpg.asset.json";
-import workshopAsset from "@/assets/workshop_table.jpg.asset.json";
-import smilingAsset from "@/assets/group_smiling.jpg.asset.json";
-import portraitAsset from "@/assets/group_portrait.jpg.asset.json";
+import { getExperiences } from "@/lib/experiences.functions";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { 
+  ArrowRight, 
+  Users, 
+  Calendar, 
+  MapPin, 
+  Heart, 
+  Coffee, 
+  Star, 
+  Sparkles,
+  Quote,
+  Camera,
+  Music,
+  Check
+} from "lucide-react";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Chega Mais BSB | Comunidade Feminina em Brasília" },
-      { name: "description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
-      { property: "og:title", content: "Chega Mais BSB | Comunidade Feminina em Brasília" },
-      { property: "og:description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
+  loader: ({ context }) => context.queryClient.ensureQueryData({
+    queryKey: ['experiences'],
+    queryFn: () => getExperiences()
   }),
-  component: Index,
+  component: LandingPage,
 });
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+};
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6 }
+  }
+};
 
-function Index() {
+function LandingPage() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } }
-  };
+  const { data: experiences } = useSuspenseQuery({
+    queryKey: ['experiences'],
+    queryFn: () => getExperiences()
+  });
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
-  };
+  const founders = [
+    {
+      name: "Ana Lu",
+      role: "IDEALIZADORA",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80",
+      quote: "O Chega Mais nasceu porque ninguém deveria viver Brasília sozinha."
+    },
+    {
+      name: "Brenda",
+      role: "IDEALIZADORA",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80",
+      quote: "Acreditamos que a cidade se torna lar quando criamos laços verdadeiros."
+    },
+    {
+      name: "Clara",
+      role: "IDEALIZADORA",
+      image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80",
+      quote: "Nossa missão é transformar encontros casuais em amizades profundas."
+    },
+    {
+      name: "Hannah",
+      role: "IDEALIZADORA",
+      image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80",
+      quote: "Brasília tem espaços incríveis que ficam ainda melhores com boa companhia."
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-[#FAF9F8] text-[#1A1A1A] font-sans selection:bg-[#7A3FF2] selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAF9F8] text-[#1A1A1A] font-sans selection:bg-[#7A3FF2]/20">
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#7A3FF2] origin-left z-50" style={{ scaleX }} />
       <Navbar />
-      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#7A3FF2] origin-left z-[60]" style={{ scaleX }} />
-
       
-      {/* Hero */}
-      <section className="relative h-screen w-full flex flex-col justify-center items-center px-4 overflow-hidden">
-        <motion.div initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 2 }} className="absolute inset-0 z-0">
-          <img src={communityAsset.url} alt="Comunidade" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/45 backdrop-blur-[4px]" />
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <motion.div 
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute inset-0 z-0"
+        >
+          <img 
+            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80" 
+            alt="Comunidade Chega Mais BSB" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px]" />
         </motion.div>
         
-        <div className="relative z-10 text-center max-w-5xl text-white px-4">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-8">
-            <Sparkles size={14} /> Comunidade feminina em Brasília
-          </motion.div>
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="text-6xl md:text-9xl font-serif font-bold mb-10 leading-[0.85] tracking-tighter">
-            Você não precisa viver Brasília sozinha.
-          </motion.h1>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="flex flex-col md:flex-row gap-6 justify-center">
-            <Link to="/experiencias" className="px-10 py-4 bg-[#7A3FF2] text-white rounded-full font-bold text-lg hover:bg-[#5E2CCF] transition-all text-center">Quero participar</Link>
-            <Link to="/experiencias" className="px-10 py-4 border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all text-center">Conhecer experiências</Link>
-
+        <div className="relative z-10 text-center px-8 max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white text-xs font-bold tracking-[0.2em] mb-8 uppercase">
+              Bem-vinda ao Chega Mais BSB
+            </span>
+            <h1 className="text-7xl md:text-9xl font-serif font-bold text-white mb-10 tracking-tighter leading-[0.9]">
+              Conexões <br />
+              <span className="italic font-light">que transformam.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+              Onde Brasília deixa de ser apenas uma cidade e passa a ser a sua casa. Encontre sua turma e viva novas experiências.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-10 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-lg shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
+              >
+                Conhecer Experiências
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-10 py-5 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/20 transition-all"
+              >
+                Nossa Comunidade
+              </motion.button>
+            </div>
           </motion.div>
         </div>
-      </section>
-
-      {/* Seção Você Já Sentiu Isso? */}
-      <section className="py-32 px-8 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-serif font-semibold mb-20 text-center tracking-tight">Você já sentiu isso?</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              "Querer sair mas não ter companhia.",
-              "Querer conhecer pessoas novas e não saber por onde começar.",
-              "Sentir que a rotina ficou pequena demais.",
-              "Querer viver algo novo mas acabar adiando.",
-              "Procurar um lugar onde possa simplesmente ser você."
-            ].map((text, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex items-center gap-4 p-6 bg-[#FAF9F8] rounded-2xl">
-                <Check className="text-[#7A3FF2]" size={24} />
-                <p className="text-lg font-medium">{text}</p>
-              </motion.div>
-            ))}
+        
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-white/50"
+        >
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
           </div>
-          <p className="text-2xl font-serif text-center mt-16 font-semibold italic">Se sim, talvez você esteja no lugar certo.</p>
-        </div>
-      </section>
-
-      {/* Nossa História */}
-      <section className="py-32 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-        <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-          <h2 className="text-4xl font-serif font-semibold mb-8 tracking-tight">Por trás do Chega Mais existem mulheres.</h2>
-          <p className="text-lg leading-relaxed text-[#5E5E5E] mb-6 italic border-l-4 border-[#7A3FF2]/20 pl-6">Somos quatro mulheres diferentes, com personalidades, sonhos e rotinas únicas. Mas acreditamos na mesma coisa: ninguém deveria precisar viver tudo sozinha.</p>
-          <p className="text-lg leading-relaxed text-[#5E5E5E] mb-8">O Chega Mais nasceu para ser um lugar onde mulheres possam chegar exatamente como são.</p>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} className="relative">
-          <img src={portraitAsset.url} alt="Fundadoras" className="rounded-3xl shadow-2xl transition-all duration-700 hover:scale-[1.02]" />
         </motion.div>
       </section>
 
-      {/* Fundadoras Premium */}
-      <section className="py-32 px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-serif font-semibold text-center mb-20 tracking-tight">As Fundadoras</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { name: "Ana Lu", role: "Idealizadora", bio: "Acredita na força dos encontros reais.", quote: "O\u00A0Chega Mais nasceu porque ninguém deveria viver Brasília sozinha." },
-              { name: "Brenda", role: "IDEALIZADORA", bio: "Focada em criar ambientes acolhedores.", quote: "Acolhimento é o nosso maior pilar." },
-              { name: "Clara", role: "IDEALIZADORA", bio: "Curadora de momentos inesquecíveis.", quote: "Cada detalhe importa na nossa conexão." },
-              { name: "Hannah", role: "IDEALIZADORA", bio: "Garante que tudo aconteça com fluidez.", quote: "Chegue como você é, o resto a gente faz." }
-            ].map((f, i) => (
-              <motion.div key={i} whileHover={{ y: -10 }} className="group">
-                <div className="h-80 rounded-2xl overflow-hidden mb-6 bg-[#FAF9F8]">
-                  <img src={portraitAsset.url} alt={f.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-                </div>
-                <h3 className="text-xl font-serif font-bold">{f.name}</h3>
-                <p className="text-[#7A3FF2] text-sm font-bold uppercase mb-2">{f.role}</p>
-                <p className="text-[#5E5E5E] text-sm mb-4">{f.bio}</p>
-                <p className="text-sm italic font-medium">"{f.quote}"</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Momentos Chega Mais (Masonry) */}
-      <section className="py-32 px-8 bg-[#FAF9F8]">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-serif font-semibold text-center mb-20 tracking-tight">Momentos Chega Mais</h2>
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            {[workshopAsset, smilingAsset, portraitAsset, communityAsset, workshopAsset, smilingAsset].map((asset, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} whileHover={{ scale: 1.02 }} className="break-inside-avoid relative group rounded-2xl overflow-hidden shadow-lg">
-                <img src={asset.url} className="w-full h-auto transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <Camera className="text-white" size={32} />
-                </div>
-              </motion.div>
-            ))}
-          </div>
+      {/* Você já sentiu isso? */}
+      <section className="py-32 px-8 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+          >
+            <motion.h2 variants={itemVariants} className="text-5xl md:text-7xl font-serif font-bold mb-10 leading-[1.1]">
+              Você já <br />sentiu isso?
+            </motion.h2>
+            <div className="space-y-8">
+              {[
+                "Chegar em Brasília e sentir que falta um lugar pra chamar de seu.",
+                "Ter vontade de sair, mas não ter com quem ir.",
+                "Sentir que a rotina está engolindo sua vida social.",
+                "Querer conhecer pessoas que compartilham seus interesses."
+              ].map((text, i) => (
+                <motion.div key={i} variants={itemVariants} className="flex gap-4 items-start">
+                  <div className="mt-1 w-6 h-6 rounded-full bg-[#7A3FF2]/10 flex items-center justify-center flex-shrink-0">
+                    <Check size={14} className="text-[#7A3FF2]" />
+                  </div>
+                  <p className="text-xl text-[#5E5E5E]">{text}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl transform rotate-3">
+              <img 
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80" 
+                alt="Conexão Chega Mais" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-10 -left-10 aspect-[4/5] w-64 rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white transform -rotate-6 hidden lg:block">
+              <img 
+                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80" 
+                alt="Momento Chega Mais" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Números da Comunidade */}
-      <section className="py-32 px-8 bg-white border-y border-black/5">
+      <section className="py-32 px-8 bg-[#7A3FF2] text-white">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
           {[
-            { label: "eventos realizados", value: "+20" },
-            { label: "mulheres participantes", value: "+300" },
-            { label: "conexões criadas", value: "+1000" },
-            { label: "experiências compartilhadas", value: "+50" }
-          ].map((n, i) => (
-            <motion.div key={i} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-              <div className="text-5xl font-serif font-bold text-[#7A3FF2] mb-2">{n.value}</div>
-              <div className="text-sm font-bold uppercase tracking-widest text-[#5E5E5E]">{n.label}</div>
+            { number: "+300", label: "Mulheres conectadas" },
+            { number: "+50", label: "Experiências vividas" },
+            { number: "+15", label: "Bairros alcançados" },
+            { number: "100%", label: "Conexões reais" }
+          ].map((stat, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+            >
+              <div className="text-5xl md:text-6xl font-serif font-bold mb-2">{stat.number}</div>
+              <div className="text-white/70 font-bold uppercase tracking-widest text-xs">{stat.label}</div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Depoimentos Carousel Style */}
-      <section className="py-32 px-8 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-serif font-semibold text-center mb-20 tracking-tight">O que elas dizem</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: "Mariana", text: "O Chega Mais mudou minha percepção de Brasília. Encontrei mulheres incríveis que hoje são minhas melhores amigas." },
-              { name: "Beatriz", text: "Eu tinha medo de ir sozinha, mas fui acolhida desde o primeiro minuto. É um ambiente realmente seguro e leve." },
-              { name: "Letícia", text: "Cada experiência é única. Não é apenas uma oficina, é um momento de reconexão comigo mesma e com as outras." }
-            ].map((t, i) => (
-              <motion.div key={i} className="p-10 bg-[#FAF9F8] rounded-3xl relative group">
-                <Quote className="absolute top-8 right-8 text-[#7A3FF2]/10" size={48} />
-                <div className="flex gap-1 mb-6 text-[#7A3FF2]">
-                  {[...Array(5)].map((_, idx) => <Star key={idx} size={16} fill="currentColor" />)}
-                </div>
-                <p className="text-lg italic mb-8">"{t.text}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#7A3FF2] text-white rounded-full flex items-center justify-center font-bold">{t.name[0]}</div>
-                  <span className="font-bold">{t.name}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Como Funciona */}
-      <section className="py-32 px-8 bg-[#FAF9F8] overflow-hidden">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-serif font-semibold mb-20 tracking-tight">Como chegar mais</h2>
-          <div className="grid lg:grid-cols-4 gap-12 relative">
-            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[#7A3FF2]/10 hidden lg:block -translate-y-1/2" />
-            {[
-              { step: "01", title: "Escolha uma experiência", icon: Coffee },
-              { step: "02", title: "Garanta seu lugar", icon: Star },
-              { step: "03", title: "Chegue como você é", icon: Heart },
-              { step: "04", title: "Viva a conexão", icon: Sparkles }
-            ].map((s, i) => (
-              <motion.div key={i} className="relative z-10 flex flex-col items-center group">
-                <div className="w-20 h-20 bg-white border-2 border-[#7A3FF2] text-[#7A3FF2] rounded-full flex items-center justify-center mb-8 group-hover:bg-[#7A3FF2] group-hover:text-white transition-all shadow-xl">
-                  <s.icon size={28} />
-                </div>
-                <span className="text-xs font-bold text-[#7A3FF2] uppercase tracking-widest mb-2">{s.step}</span>
-                <h3 className="text-xl font-serif font-bold">{s.title}</h3>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Experiências */}
-      <section className="py-32 px-8 bg-white">
+      {/* Próximas Experiências */}
+      <section className="py-32 px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-20">
-            <h2 className="text-4xl md:text-6xl font-serif font-semibold tracking-tight">Próximas Experiências</h2>
-            <Link to="/experiencias" className="flex items-center gap-2 text-[#7A3FF2] font-bold border-b-2 border-[#7A3FF2]/20 pb-2 hover:border-[#7A3FF2] transition-all">
-              Ver calendário <ArrowRight size={20} />
-            </Link>
-
+          <div className="flex justify-between items-end mb-16">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight">Vem pra <br />próxima?</h2>
+              <p className="text-xl text-[#5E5E5E] max-w-lg">Escolha uma experiência e comece a escrever sua nova história em Brasília.</p>
+            </motion.div>
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden md:flex items-center gap-2 font-bold text-[#7A3FF2] group"
+            >
+              Ver todas <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+            </motion.button>
           </div>
+
           <div className="grid md:grid-cols-3 gap-10">
-            {[
-              { title: "Café & Pintura", date: "24 Ago", loc: "Asa Norte", tag: "Artes", vacancies: "2 vagas", slug: "cafe-e-pintura" },
-              { title: "Workshop de Cerâmica", date: "15 Set", loc: "Lago Sul", tag: "Manual", vacancies: "4 vagas", slug: "workshop-de-ceramica" },
-              { title: "Trilha & Piquenique", date: "02 Set", loc: "Parque", tag: "Outdoor", vacancies: "Esgotado", slug: "trilha-e-piquenique" }
-            ].map((e, i) => (
-              <motion.div key={i} whileHover={{ y: -10 }} className="bg-[#FAF9F8] rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all">
+            {(experiences || []).slice(0, 3).map((e: any, i: number) => (
+              <motion.div 
+                key={e.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all border border-black/5"
+              >
                 <div className="h-72 overflow-hidden relative">
-                  <img src={workshopAsset.url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <div className="absolute top-6 left-6 px-4 py-1.5 bg-white/90 rounded-full text-xs font-bold uppercase text-[#7A3FF2]">{e.tag}</div>
+                  <img src={e.image_url || "/placeholder.jpg"} alt={e.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute top-6 left-6 px-4 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold uppercase text-[#7A3FF2] tracking-widest">{e.category}</div>
                 </div>
                 <div className="p-10">
                   <div className="flex gap-4 text-xs font-bold text-[#5E5E5E] mb-6 uppercase tracking-widest">
-                    <span className="flex items-center gap-1"><Calendar size={14} /> {e.date}</span>
-                    <span className="flex items-center gap-1"><MapPin size={14} /> {e.loc}</span>
+                    <span className="flex items-center gap-1"><Calendar size={14} /> {e.display_date}</span>
+                    <span className="flex items-center gap-1"><MapPin size={14} /> {e.location}</span>
                   </div>
                   <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
-                  <div className="flex justify-between items-center mt-10">
-                    <span className="text-sm font-bold text-[#5E5E5E]">{e.vacancies}</span>
-                    <Link to={`/experiencias/${e.slug}`} className="px-6 py-3 bg-[#7A3FF2] text-white rounded-full font-bold text-sm hover:bg-[#5E2CCF] transition-all">Participar</Link>
-                  </div>
+                  <p className="text-[#5E5E5E] mb-10 h-12">{e.short_description}</p>
+                  <motion.button 
+                    whileHover={{ scale: 1.02 }}
+                    className="w-full py-4 bg-[#FAF9F8] text-[#1A1A1A] rounded-full font-bold text-sm hover:bg-[#7A3FF2] hover:text-white transition-all border border-black/5"
+                  >
+                    Participar da Experiência
+                  </motion.button>
                 </div>
               </motion.div>
             ))}
@@ -248,38 +284,66 @@ function Index() {
         </div>
       </section>
 
-      {/* Seção Emocional Impacto */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img src={communityAsset.url} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative z-10 text-center text-white px-8 max-w-5xl">
-          <h2 className="text-4xl md:text-7xl font-serif font-bold italic mb-10 leading-tight">Não é sobre o evento.<br/>É sobre o que acontece depois dele.</h2>
-          <p className="text-2xl font-serif italic opacity-80">As melhores amizades geralmente começam quando alguém aceita um convite.</p>
-        </motion.div>
-      </section>
-
-      {/* CTA Final */}
-      <section className="py-48 px-8 bg-white text-center relative overflow-hidden">
-        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-4xl mx-auto relative z-10">
-          <Sparkles className="text-[#7A3FF2] mx-auto mb-10" size={48} />
-          <h2 className="text-5xl md:text-8xl font-serif font-bold mb-10 tracking-tighter leading-[0.9]">Talvez sua próxima amizade esteja a uma inscrição de distância.</h2>
-          <p className="text-xl md:text-2xl font-serif italic mb-16 text-[#5E5E5E]">Você não precisa chegar acompanhada.<br/>Você só precisa chegar.</p>
-          <div className="flex flex-col md:flex-row gap-6 justify-center">
-            <Link to="/experiencias" className="px-12 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-xl hover:bg-[#5E2CCF] transition-all shadow-2xl text-center">Quero participar</Link>
-            <Link to="/experiencias" className="px-12 py-5 border border-black/10 rounded-full font-bold text-xl hover:bg-black/5 transition-all text-center">Conhecer experiências</Link>
-
+      {/* Fundadoras */}
+      <section className="py-32 px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-7xl font-serif font-bold mb-6">Idealizadoras</h2>
+            <p className="text-xl text-[#5E5E5E] max-w-2xl mx-auto">As mentes e os corações por trás do Chega Mais BSB.</p>
           </div>
-        </motion.div>
+          
+          <div className="grid md:grid-cols-4 gap-8">
+            {founders.map((founder, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="group"
+              >
+                <div className="aspect-[3/4] rounded-[2rem] overflow-hidden mb-6 shadow-lg border border-black/5 relative">
+                  <img src={founder.image} alt={founder.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
+                    <Quote className="text-white/50 mb-4" size={24} />
+                    <p className="text-white text-sm italic font-medium">"{founder.quote}"</p>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-serif font-bold mb-1">{founder.name}</h3>
+                <p className="text-[#7A3FF2] font-bold text-xs uppercase tracking-widest">{founder.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      <footer className="py-20 bg-[#FAF9F8] text-center border-t border-black/5">
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <img src={logoAsset.url} className="w-10 h-10 rounded-full" />
-          <span className="font-serif text-xl font-bold">Chega Mais BSB</span>
+      {/* Footer / Final CTA */}
+      <footer className="py-32 px-8 bg-[#FAF9F8] text-center border-t border-black/5">
+        <div className="max-w-4xl mx-auto">
+          <Sparkles className="text-[#7A3FF2] mx-auto mb-10" size={48} />
+          <h2 className="text-5xl md:text-8xl font-serif font-bold mb-12 tracking-tight leading-[0.9]">
+            Chega mais. <br />
+            <span className="italic font-light">Estamos te esperando.</span>
+          </h2>
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-16 py-6 bg-[#7A3FF2] text-white rounded-full font-bold text-xl shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
+          >
+            Fazer parte da comunidade
+          </motion.button>
+          
+          <div className="mt-24 pt-12 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="text-2xl font-serif font-bold text-[#7A3FF2]">Chega Mais BSB</div>
+            <div className="flex gap-8 text-sm font-bold text-[#5E5E5E] uppercase tracking-widest">
+              <a href="#" className="hover:text-[#7A3FF2] transition-colors">Instagram</a>
+              <a href="#" className="hover:text-[#7A3FF2] transition-colors">WhatsApp</a>
+              <a href="#" className="hover:text-[#7A3FF2] transition-colors">LinkedIn</a>
+            </div>
+            <div className="text-xs font-bold text-[#5E5E5E] uppercase tracking-widest">© 2024 Chega Mais BSB</div>
+          </div>
         </div>
-        <p className="text-[#5E5E5E] text-sm font-medium">© 2026 • Feito com amor em Brasília</p>
       </footer>
     </div>
   );
