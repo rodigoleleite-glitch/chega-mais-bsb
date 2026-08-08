@@ -19,8 +19,9 @@ export interface SheetEvent {
   spots: string;
 }
 
-// URL da planilha publicada como CSV (Exemplo: https://docs.google.com/spreadsheets/d/e/.../pub?output=csv)
-const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6zOqQhHq-9r8q7-8X-v3r9s0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0/pub?output=csv";
+// URL da planilha publicada como CSV
+// Link original: https://docs.google.com/spreadsheets/d/1os--AybmZh6xiclGfDtB5lqy2bPEQwDlrLDGwsQNQho/edit?usp=sharing
+const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/1os--AybmZh6xiclGfDtB5lqy2bPEQwDlrLDGwsQNQho/gviz/tq?tqx=out:csv";
 
 export const fetchEventsFromSheets = createServerFn({ method: "GET" })
   .handler(async () => {
@@ -69,7 +70,17 @@ export async function getEvents() {
   return allEvents.sort((a, b) => {
     if (a.featured && !b.featured) return -1;
     if (!a.featured && b.featured) return 1;
-    return new Date(a.date).getTime() - new Date(b.date).getTime();
+    
+    // Parse dates in DD/MM/YYYY format for sorting
+    const parseDate = (d: string) => {
+      const parts = d.split('/');
+      if (parts.length === 3) {
+        return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime();
+      }
+      return new Date(d).getTime();
+    };
+    
+    return parseDate(a.date) - parseDate(b.date);
   });
 }
 
