@@ -187,16 +187,49 @@ function Index() {
       </section>
 
       {/* Momentos (Galeria) */}
-      <section className="py-24 px-8 bg-white">
+      <section className="py-32 px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-serif font-semibold mb-6">Momentos Chega Mais</h2>
-          <p className="text-[#666]">Um pouco do que acontece em nossa comunidade.</p>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-serif font-semibold mb-6"
+          >
+            Momentos Chega Mais
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-[#666]"
+          >
+            Um pouco do que acontece em nossa comunidade.
+          </motion.p>
         </div>
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6">
-          <img src={workshopAsset.url} className="rounded-2xl w-full h-64 object-cover" />
-          <img src={smilingAsset.url} className="rounded-2xl w-full h-64 object-cover" />
-          <img src={portraitAsset.url} className="rounded-2xl w-full h-64 object-cover" />
-        </div>
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6"
+        >
+          {[workshopAsset, smilingAsset, portraitAsset].map((asset, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              whileHover={{ scale: 1.05, zIndex: 10 }}
+              className="relative overflow-hidden rounded-2xl group shadow-lg"
+            >
+              <motion.img 
+                src={asset.url} 
+                className="rounded-2xl w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-[#4A3D66]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <Camera className="text-white" size={32} />
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </section>
 
       {/* Seção O Que Elas Dizem (Depoimentos) */}
