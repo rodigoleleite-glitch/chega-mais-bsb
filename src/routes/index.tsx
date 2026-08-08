@@ -63,25 +63,25 @@ function LandingPage() {
     {
       name: "Ana Lu",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/9ef0f171-d6b0-4613-8994-e350020461d3.png",
       quote: "O Chega Mais nasceu porque ninguém deveria viver Brasília sozinha."
     },
     {
       name: "Brenda",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/a754b2d5-9175-4d7a-85d8-04ccf8158097.png",
       quote: "Acreditamos que a cidade se torna lar quando criamos laços verdadeiros."
     },
     {
       name: "Clara",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/410887df-520e-48a5-b385-d6ec8c772c67.png",
       quote: "Nossa missão é transformar encontros casuais em amizades profundas."
     },
     {
       name: "Hannah",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/39d5e786-2ed5-48b4-9388-75c3ef27718e.png",
       quote: "Brasília tem espaços incríveis que ficam ainda melhores com boa companhia."
     }
   ];
@@ -100,7 +100,7 @@ function LandingPage() {
           className="absolute inset-0 z-0"
         >
           <img 
-            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80" 
+            src="https://gentle-greetings-helper.lovable.app/lovable-uploads/62768560-6b65-4f76-857e-12826a7e58a2.png" 
             alt="Comunidade Chega Mais BSB" 
             className="w-full h-full object-cover"
           />
@@ -190,14 +190,14 @@ function LandingPage() {
           >
             <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl transform rotate-3">
               <img 
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80" 
+                src="https://gentle-greetings-helper.lovable.app/lovable-uploads/977799b6-7911-49b5-9f5b-1180b7c76899.png" 
                 alt="Conexão Chega Mais" 
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="absolute -bottom-10 -left-10 aspect-[4/5] w-64 rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white transform -rotate-6 hidden lg:block">
               <img 
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80" 
+                src="https://gentle-greetings-helper.lovable.app/lovable-uploads/27671190-2646-444f-8389-9e8a096c4a30.png" 
                 alt="Momento Chega Mais" 
                 className="w-full h-full object-cover"
               />
