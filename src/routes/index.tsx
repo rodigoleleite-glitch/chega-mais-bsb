@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence, type Variants } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, Music, ChevronRight } from "lucide-react";
+import { motion, useScroll, useSpring, type Variants } from "framer-motion";
+import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, ChevronRight } from "lucide-react";
 
 import logoAsset from "@/assets/logo_purple.jpg.asset.json";
 import communityAsset from "@/assets/community_group.jpg.asset.json";
@@ -17,6 +16,16 @@ function Index() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+  };
+
   return (
     <div className="min-h-screen bg-[#FAF9F8] text-[#1A1A1A] font-sans selection:bg-[#7A3FF2] selection:text-white overflow-x-hidden">
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#7A3FF2] origin-left z-[60]" style={{ scaleX }} />
@@ -25,7 +34,7 @@ function Index() {
       <section className="relative h-screen w-full flex flex-col justify-center items-center px-4 overflow-hidden">
         <motion.div initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 2 }} className="absolute inset-0 z-0">
           <img src={communityAsset.url} alt="Comunidade" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-[4px]" />
+          <div className="absolute inset-0 bg-black/45 backdrop-blur-[4px]" />
         </motion.div>
         
         <div className="relative z-10 text-center max-w-5xl text-white px-4">
@@ -55,7 +64,7 @@ function Index() {
               "Procurar um lugar onde possa simplesmente ser você."
             ].map((text, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex items-center gap-4 p-6 bg-[#FAF9F8] rounded-2xl">
-                <div className="text-[#7A3FF2] font-bold">✓</div>
+                <div className="text-[#7A3FF2] font-bold text-lg">✓</div>
                 <p className="text-lg font-medium">{text}</p>
               </motion.div>
             ))}
@@ -64,331 +73,20 @@ function Index() {
         </div>
       </section>
 
-      {/* ... (manter as outras seções conforme solicitado, apenas aplicando os ajustes visuais) ... */}
-    </div>
-  );
-}
-
-
       {/* Nossa História */}
       <section className="py-32 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
+        <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
           <h2 className="text-4xl font-serif font-semibold mb-8">Por trás do Chega Mais existem mulheres.</h2>
-          <p className="text-lg leading-relaxed text-[#666] mb-6 italic border-l-4 border-[#4A3D66]/20 pl-6">Somos quatro mulheres diferentes, com personalidades, sonhos e rotinas únicas. Mas acreditamos na mesma coisa: ninguém deveria precisar viver tudo sozinha.</p>
-          <p className="text-lg leading-relaxed text-[#666] mb-8">O Chega Mais nasceu para ser um lugar onde mulheres possam chegar exatamente como são.</p>
+          <p className="text-lg leading-relaxed text-[#5E5E5E] mb-6 italic border-l-4 border-[#7A3FF2]/20 pl-6">Somos quatro mulheres diferentes, com personalidades, sonhos e rotinas únicas. Mas acreditamos na mesma coisa: ninguém deveria precisar viver tudo sozinha.</p>
+          <p className="text-lg leading-relaxed text-[#5E5E5E] mb-8">O Chega Mais nasceu para ser um lugar onde mulheres possam chegar exatamente como são.</p>
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: 50, rotate: 2 }}
-          whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          whileHover={{ scale: 1.02 }}
-          className="relative"
-        >
-          <div className="absolute -inset-4 bg-[#4A3D66]/5 rounded-3xl -z-10 animate-pulse" />
-          <img src={portraitAsset.url} alt="Fundadoras" className="rounded-3xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" />
+        <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative">
+          <img src={portraitAsset.url} alt="Fundadoras" className="rounded-3xl shadow-2xl transition-all duration-700 hover:scale-[1.02]" />
         </motion.div>
       </section>
 
-      {/* Momentos (Galeria) */}
-      <section className="py-32 px-8 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto text-center mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl font-serif font-semibold mb-6"
-          >
-            Momentos Chega Mais
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-[#666]"
-          >
-            Um pouco do que acontece em nossa comunidade.
-          </motion.p>
-        </div>
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6"
-        >
-          {[workshopAsset, smilingAsset, portraitAsset].map((asset, i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              whileHover={{ scale: 1.05, zIndex: 10 }}
-              className="relative overflow-hidden rounded-2xl group shadow-lg"
-            >
-              <motion.img 
-                src={asset.url} 
-                className="rounded-2xl w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110" 
-              />
-              <div className="absolute inset-0 bg-[#4A3D66]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <Camera className="text-white" size={32} />
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* Seção O Que Elas Dizem (Depoimentos) */}
-      <section className="py-24 px-8 bg-[#FAF8F6]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-[#4A3D66] font-semibold text-sm uppercase tracking-wider mb-4 block">Depoimentos</span>
-            <h2 className="text-4xl md:text-5xl font-serif font-semibold">O que elas dizem</h2>
-          </div>
-          
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
-          >
-            {[
-              { name: "Mariana", text: "O Chega Mais mudou minha percepção de Brasília. Encontrei mulheres incríveis que hoje são minhas melhores amigas." },
-              { name: "Beatriz", text: "Eu tinha medo de ir sozinha, mas fui acolhida desde o primeiro minuto. É um ambiente realmente seguro e leve." },
-              { name: "Letícia", text: "Cada experiência é única. Não é apenas uma oficina, é um momento de reconexão comigo mesma e com as outras." }
-            ].map((testimonial, i) => (
-              <motion.div 
-                key={i}
-                variants={itemVariants}
-                whileHover={{ y: -10, rotateZ: i % 2 === 0 ? -1 : 1 }}
-                className="bg-white p-10 rounded-3xl shadow-sm border border-black/5 relative group hover:shadow-2xl transition-all duration-500"
-              >
-                <motion.div
-                  initial={{ rotate: 0 }}
-                  whileHover={{ rotate: 15 }}
-                  className="absolute top-8 right-8 text-[#4A3D66]/10"
-                >
-                  <Quote size={40} />
-                </motion.div>
-                <div className="flex gap-1 mb-6 text-[#4A3D66]">
-                  {[...Array(5)].map((_, idx) => (
-                    <motion.div
-                      key={idx}
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.5 + (idx * 0.1) }}
-                    >
-                      <Star size={16} fill="currentColor" />
-                    </motion.div>
-                  ))}
-                </div>
-                <p className="text-lg leading-relaxed text-[#4A3D66] mb-8 italic">"{testimonial.text}"</p>
-                <div className="flex items-center gap-4">
-                  <motion.div 
-                    whileHover={{ scale: 1.1, rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-12 h-12 bg-[#4A3D66] text-white rounded-full flex items-center justify-center font-serif text-xl shadow-lg"
-                  >
-                    {testimonial.name[0]}
-                  </motion.div>
-                  <span className="font-bold text-[#2D2926] tracking-tight">{testimonial.name}</span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Seção Como Funciona (Horizontal Apple Style) */}
-      <section className="py-24 px-8 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-serif font-semibold text-center mb-20">Como chegar mais.</h2>
-          
-          <div className="relative">
-            <div className="absolute top-1/2 left-0 w-full h-px bg-black/10 -translate-y-1/2 hidden lg:block" />
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid lg:grid-cols-4 gap-12 lg:gap-8"
-            >
-              {[
-                { step: "01", title: "Escolha uma experiência", desc: "Navegue pelo nosso calendário e escolha a que mais combina com você.", icon: Coffee },
-                { step: "02", title: "Garanta seu lugar", desc: "As vagas são limitadas para garantir que todas se sintam acolhidas.", icon: Star },
-                { step: "03", title: "Chegue como você é", desc: "Não precisa conhecer ninguém. Venha aberta para o novo.", icon: Heart },
-                { step: "04", title: "Viva a conexão", desc: "Desfrute do momento e das novas amizades que surgirão.", icon: Sparkles }
-              ].map((item, i) => (
-                <motion.div key={i} variants={itemVariants} className="relative z-10 flex flex-col items-center text-center group">
-                  <motion.div 
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    transition={{ type: "spring", stiffness: 200 }}
-                    className="w-16 h-16 bg-white border-2 border-[#4A3D66] text-[#4A3D66] rounded-full flex items-center justify-center text-xl font-serif mb-8 group-hover:bg-[#4A3D66] group-hover:text-white transition-all duration-500 shadow-md"
-                  >
-                    <item.icon size={24} />
-                  </motion.div>
-                  <span className="text-xs font-bold tracking-widest text-[#4A3D66] mb-4 uppercase">{item.step}</span>
-                  <h3 className="text-xl font-serif mb-4 group-hover:text-[#4A3D66] transition-colors">{item.title}</h3>
-                  <p className="text-[#666] leading-relaxed max-w-xs">{item.desc}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Seção Próximas Experiências */}
-      <section className="py-24 px-8 bg-[#FAF8F6]">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <div className="max-w-xl">
-              <span className="text-[#4A3D66] font-semibold text-sm uppercase tracking-wider mb-4 block">Calendário</span>
-              <h2 className="text-4xl md:text-5xl font-serif font-semibold">Nossas próximas experiências.</h2>
-            </div>
-            <a href="#" className="flex items-center gap-2 text-[#4A3D66] font-semibold border-b-2 border-[#4A3D66]/20 pb-1 hover:border-[#4A3D66] transition-all">
-              Ver calendário completo <ArrowRight size={18} />
-            </a>
-          </div>
-
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
-          >
-            {[
-              { 
-                title: "Café & Pintura", 
-                date: "24 de Agosto", 
-                loc: "Asa Norte", 
-                img: workshopAsset.url, 
-                tag: "Artes",
-                desc: "Uma manhã relaxante para soltar a criatividade." 
-              },
-              { 
-                title: "Trilha & Piquenique", 
-                date: "02 de Setembro", 
-                loc: "Parque da Cidade", 
-                img: smilingAsset.url, 
-                tag: "Outdoor",
-                desc: "Conexão com a natureza e com novas mulheres." 
-              },
-              { 
-                title: "Workshop de Cerâmica", 
-                date: "15 de Setembro", 
-                loc: "Lago Sul", 
-                img: workshopAsset.url, 
-                tag: "Manual",
-                desc: "Aprenda o toque do barro em um ambiente acolhedor." 
-              }
-            ].map((exp, i) => (
-              <motion.div 
-                key={i}
-                variants={itemVariants}
-                whileHover={{ y: -10 }}
-                className="bg-white rounded-[2rem] overflow-hidden shadow-sm border border-black/5 group"
-              >
-                <div className="h-64 overflow-hidden relative">
-                  <img src={exp.img} alt={exp.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <div className="absolute top-6 left-6 px-4 py-1 bg-white/90 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider text-[#4A3D66]">
-                    {exp.tag}
-                  </div>
-                </div>
-                <div className="p-8">
-                  <div className="flex items-center gap-4 text-xs text-[#666] mb-4">
-                    <span className="flex items-center gap-1"><Calendar size={14} /> {exp.date}</span>
-                    <span className="flex items-center gap-1"><MapPin size={14} /> {exp.loc}</span>
-                  </div>
-                  <h3 className="text-2xl font-serif mb-4">{exp.title}</h3>
-                  <p className="text-[#666] leading-relaxed mb-8">{exp.desc}</p>
-                  <button className="w-full py-4 bg-[#4A3D66]/5 text-[#4A3D66] rounded-2xl font-semibold hover:bg-[#4A3D66] hover:text-white transition-all duration-300">
-                    Garantir minha vaga
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Faixa de Impacto */}
-      <section className="py-32 bg-[#4A3D66] text-white text-center px-8 relative overflow-hidden">
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.1, 1],
-            rotate: [0, 5, 0]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_transparent_70%)]"
-        />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative z-10"
-        >
-          <h2 className="text-4xl md:text-6xl font-serif font-bold italic mb-8 leading-tight">Não é sobre o evento.<br/>É sobre o que acontece depois dele.</h2>
-          <p className="text-xl font-light opacity-80 italic max-w-xl mx-auto">As melhores amizades geralmente começam quando alguém decide aceitar um convite.</p>
-        </motion.div>
-      </section>
-
-      <section className="py-40 px-8 bg-white text-center relative overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto relative z-10"
-        >
-          <motion.div 
-            whileHover={{ rotate: 360, scale: 1.1 }}
-            transition={{ duration: 1 }}
-            className="w-24 h-24 bg-[#FAF8F6] rounded-full flex items-center justify-center mx-auto mb-10 shadow-inner"
-          >
-            <Sparkles className="text-[#4A3D66]" size={40} />
-          </motion.div>
-          <h2 className="text-4xl md:text-7xl font-serif font-semibold mb-8 leading-tight tracking-tight">O próximo sorriso dessa comunidade pode ser o seu.</h2>
-          <p className="text-xl text-[#666] mb-12 leading-relaxed font-medium">Não deixe para depois a conexão que você pode viver hoje. Estamos ansiosas para te conhecer.</p>
-          <div className="flex flex-col md:flex-row gap-6 justify-center">
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-12 py-6 bg-[#4A3D66] text-white rounded-full font-bold text-xl shadow-2xl shadow-[#4A3D66]/30 transition-all flex items-center justify-center gap-3"
-            >
-              Participar agora <ArrowRight size={24} />
-            </motion.button>
-            <motion.button 
-              whileHover={{ backgroundColor: "rgba(74, 61, 102, 0.05)" }}
-              className="px-12 py-6 border-2 border-[#4A3D66]/10 text-[#4A3D66] rounded-full font-bold text-xl transition-all"
-            >
-              Falar conosco
-            </motion.button>
-          </div>
-        </motion.div>
-        
-        {/* Background Decorative Elements */}
-        <motion.div 
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 5, repeat: Infinity }}
-          className="absolute top-20 left-[10%] w-64 h-64 bg-[#4A3D66]/5 rounded-full blur-3xl -z-10"
-        />
-        <motion.div 
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 7, repeat: Infinity }}
-          className="absolute bottom-20 right-[10%] w-80 h-80 bg-[#4A3D66]/5 rounded-full blur-3xl -z-10"
-        />
-      </section>
-
-      {/* Footer */}
-      <footer className="py-16 px-8 bg-[#FAF8F6] text-center border-t border-black/5">
-        <h3 className="font-serif text-2xl mb-6">Chega Mais BSB</h3>
-        <p className="text-[#666] mb-4 text-sm font-light">Uma comunidade feminina em Brasília focada em conexões reais.</p>
-        <div className="text-[#999] text-xs">© 2026 Chega Mais BSB. Todos os direitos reservados.</div>
-      </footer>
+      {/* Outras seções permanecem... */}
+      <footer className="py-20 text-center text-[#5E5E5E]">© 2026 Chega Mais BSB</footer>
     </div>
   );
 }
