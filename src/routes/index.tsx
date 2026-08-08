@@ -63,7 +63,7 @@ function Index() {
         
         <div className="relative z-10 text-center max-w-5xl text-white px-4">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-8">
-            <Sparkles size={14} /> Comunidade feminina em Brasília
+            <Sparkles size={14} /> CHEGA MAIS, VEM COM A GENTE!
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="text-6xl md:text-9xl font-serif font-bold mb-10 leading-[0.85] tracking-tighter">
             Você não precisa viver Brasília sozinha.
