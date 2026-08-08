@@ -10,7 +10,7 @@ export const Route = createFileRoute("/experiencias/$slug")({
   loader: async ({ params, context }) => {
     return context.queryClient.ensureQueryData({
       queryKey: ['experience', params.slug],
-      queryFn: () => getExperienceBySlug(params.slug)
+      queryFn: () => getExperienceBySlug({ data: params.slug })
     });
   },
   head: ({ loaderData }) => {
@@ -35,7 +35,7 @@ function ExperienciaIndividual() {
   const { slug } = useParams({ from: "/experiencias/$slug" });
   const { data: event } = useSuspenseQuery({
     queryKey: ['experience', slug],
-    queryFn: () => getExperienceBySlug(slug)
+    queryFn: () => getExperienceBySlug({ data: slug })
   });
 
   if (!event) return <div>Evento não encontrado.</div>;
@@ -87,7 +87,6 @@ function ExperienciaIndividual() {
                     className="flex items-center gap-2 hover:text-[#7A3FF2] transition-colors"
                   >
                     <MapPin size={18} className="text-[#7A3FF2]" /> {event.location}
-
                   </a>
                 ) : (
                   <span className="flex items-center gap-2"><MapPin size={18} className="text-[#7A3FF2]" /> {event.location}</span>
@@ -114,7 +113,7 @@ function ExperienciaIndividual() {
             <div className="bg-white p-12 rounded-[2.5rem] border border-black/5 mb-20">
               <h3 className="text-2xl font-serif font-bold mb-8">O que está incluso</h3>
               <div className="grid md:grid-cols-2 gap-6">
-                {event.includes.map((inc, i) => (
+                {(event.includes || []).map((inc: string, i: number) => (
                   <div key={i} className="flex items-center gap-3">
                     <Check className="text-[#7A3FF2]" /> <span className="font-semibold text-[#1A1A1A]">{inc}</span>
                   </div>
@@ -124,7 +123,7 @@ function ExperienciaIndividual() {
 
             <h3 className="text-2xl font-serif font-bold mb-10">Para quem é</h3>
             <div className="grid md:grid-cols-3 gap-6">
-              {event.for_who.map((who: string, i: number) => (
+              {(event.for_who || []).map((who: string, i: number) => (
                 <div key={i} className="bg-[#FAF9F8] p-8 rounded-2xl border border-black/5 font-semibold text-[#1A1A1A]">
                   <Check className="text-[#7A3FF2] mb-4" /> {who}
                 </div>
