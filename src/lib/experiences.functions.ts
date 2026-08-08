@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export const getExperiences = createServerFn({ method: "GET" })
   .handler(async () => {
@@ -27,6 +28,7 @@ export const getExperienceBySlug = createServerFn({ method: "GET" })
   });
 
 export const createExperience = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data: any) => z.object({
     data: z.object({
       slug: z.string(),
@@ -47,13 +49,12 @@ export const createExperience = createServerFn({ method: "POST" })
       for_who: z.array(z.string()),
     })
   }).parse(data))
-  .handler(async ({ data: input }) => {
+  .handler(async ({ data: input, context }) => {
     const payload: any = { ...input.data };
-    // ExactOptionalPropertyTypes fix: map undefined to null
     if (payload.google_maps_url === undefined) payload.google_maps_url = null;
     if (payload.image_url === undefined) payload.image_url = null;
 
-    const { data: result, error } = await supabase
+    const { data: result, error } = await context.supabase
       .from('experiences')
       .insert(payload)
       .select()
@@ -64,14 +65,15 @@ export const createExperience = createServerFn({ method: "POST" })
   });
 
 export const updateExperience = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data: any) => z.object({
     data: z.object({
       id: z.string(),
       updates: z.any()
     })
   }).parse(data))
-  .handler(async ({ data: input }) => {
-    const { data: result, error } = await supabase
+  .handler(async ({ data: input, context }) => {
+    const { data: result, error } = await context.supabase
       .from('experiences')
       .update(input.data.updates)
       .eq('id', input.data.id)
@@ -83,9 +85,10 @@ export const updateExperience = createServerFn({ method: "POST" })
   });
 
 export const deleteExperience = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((data: any) => z.object({ data: z.string() }).parse(data))
-  .handler(async ({ data: input }) => {
-    const { error } = await supabase
+  .handler(async ({ data: input, context }) => {
+    const { error } = await context.supabase
       .from('experiences')
       .delete()
       .eq('id', input.data);
@@ -95,14 +98,12 @@ export const deleteExperience = createServerFn({ method: "POST" })
   });
 
 export const checkIsAdmin = createServerFn({ method: "GET" })
-  .handler(async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return false;
-
-    const { data, error } = await supabase
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data, error } = await context.supabase
       .from('user_roles')
       .select('role')
-      .eq('user_id', user.id)
+      .eq('user_id', context.userId)
       .eq('role', 'admin')
       .single();
     
