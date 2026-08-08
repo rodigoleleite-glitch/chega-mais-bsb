@@ -1,32 +1,38 @@
+import React from "react";
 import { createFileRoute, useParams, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
-import { events } from "@/data/events";
+import { getEventBySlug, type SheetEvent as Event } from "@/services/eventsService";
 import { Calendar, MapPin, Check, Camera, ArrowRight, Sparkles, HelpCircle, ChevronDown } from "lucide-react";
 
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/experiencias/$slug")({
-  head: ({ params }) => {
-    const event = events.find((e) => e.slug === params.slug);
-    return {
-      meta: [
-        { title: `${event?.title || 'Experiência'} | Chega Mais BSB` },
-        { name: "description", content: event?.shortDescription || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
-        { property: "og:title", content: `${event?.title || 'Experiência'} | Chega Mais BSB` },
-        { property: "og:description", content: event?.shortDescription || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
-        { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary_large_image" },
-        ...(event?.image ? [{ property: "og:image", content: event.image }, { name: "twitter:image", content: event.image }] : []),
-      ],
-    };
-  },
+  head: () => ({
+    meta: [{ title: 'Experiência | Chega Mais BSB' }],
+  }),
   component: ExperienciaIndividual,
 });
 
 
 function ExperienciaIndividual() {
   const { slug } = useParams({ from: "/experiencias/$slug" });
-  const event = events.find((e) => e.slug === slug);
+  const [event, setEvent] = React.useState<Event | undefined>(undefined);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    getEventBySlug(slug).then(res => {
+      setEvent(res);
+      setLoading(false);
+    });
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#FAF9F8] flex items-center justify-center">
+        <div className="animate-pulse text-[#7A3FF2] font-serif text-2xl">Carregando...</div>
+      </div>
+    );
+  }
 
   if (!event) {
     return (
@@ -42,11 +48,11 @@ function ExperienciaIndividual() {
     );
   }
 
-  const registrationEnabled = !!event.registrationUrl;
+  const registrationEnabled = event.status === 'aberto' && !!event.formUrl;
 
   const handleRegister = () => {
     if (!registrationEnabled) return;
-    window.open(event.registrationUrl, '_blank');
+    window.open(event.formUrl, '_blank');
   };
 
   return (
@@ -91,68 +97,27 @@ function ExperienciaIndividual() {
 
           <div className="prose prose-lg max-w-none text-[#5E5E5E]">
             <h2 className="text-3xl font-serif text-[#1A1A1A] mb-6">Sobre a experiência</h2>
-            <p className="leading-relaxed text-xl text-[#1A1A1A] mb-12">{event.fullDescription}</p>
+            <p className="leading-relaxed text-xl text-[#1A1A1A] mb-12">{event.description}</p>
             
-            <div className="bg-white p-12 rounded-[2.5rem] border border-black/5 mb-20">
-              <h3 className="text-2xl font-serif font-bold mb-8">O que está incluso</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                {event.included.map((inc, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <Check className="text-[#7A3FF2]" /> <span className="font-semibold text-[#1A1A1A]">{inc}</span>
-                  </div>
-                ))}
+            {event.spots && (
+              <div className="bg-white p-12 rounded-[2.5rem] border border-black/5 mb-20">
+                <h3 className="text-2xl font-serif font-bold mb-8 italic">Vagas</h3>
+                <p className="text-[#1A1A1A] text-lg">{event.spots}</p>
               </div>
-            </div>
-
-            <h3 className="text-2xl font-serif font-bold mb-10">Ideal para</h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              {event.idealFor.map((who, i) => (
-                <div key={i} className="bg-[#FAF9F8] p-8 rounded-2xl border border-black/5 font-semibold text-[#1A1A1A]">
-                  <Check className="text-[#7A3FF2] mb-4" /> {who}
-                </div>
-              ))}
-            </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Galeria */}
-      {event.gallery.length > 0 && (
-        <section className="py-20 px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-serif font-bold mb-12 text-center tracking-tight">Galeria de Experiências</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {event.gallery.map((img, i) => (
-                <div key={i} className="aspect-square rounded-2xl overflow-hidden group">
-                  <img src={img} alt={`Galeria ${i}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                </div>
-              ))}
-            </div>
+      {/* Galeria - Cinematic Highlight from Sheets */}
+      <section className="py-20 px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-serif font-bold mb-12 text-center tracking-tight">Experiência Chega Mais</h2>
+          <div className="max-w-4xl mx-auto h-[60vh] rounded-[3rem] overflow-hidden shadow-2xl">
+             <img src={event.image} alt="Destaque" className="w-full h-full object-cover" />
           </div>
-        </section>
-      )}
-
-      {/* FAQ */}
-      {event.faq.length > 0 && (
-        <section className="py-20 px-8 bg-[#FAF9F8]">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-serif font-bold mb-12 text-center tracking-tight">Perguntas Frequentes</h2>
-            <div className="space-y-4">
-              {event.faq.map((faq, i) => (
-                <details key={i} className="group bg-white rounded-2xl border border-black/5 overflow-hidden">
-                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-[#1A1A1A]">
-                    <span className="flex items-center gap-3"><HelpCircle size={20} className="text-[#7A3FF2]" /> {faq.question}</span>
-                    <ChevronDown size={20} className="text-[#5E5E5E] group-open:rotate-180 transition-transform" />
-                  </summary>
-                  <div className="px-6 pb-6 text-[#5E5E5E] leading-relaxed">
-                    {faq.answer}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+        </div>
+      </section>
 
 
       {/* CTA Final */}
