@@ -8,9 +8,11 @@ export interface Experience {
   slug: string;
   title: string;
   category: string;
-  date: string;
+  date: string; // Formato DD/MM/AAAA para cálculo, ex: "2024-08-24"
+  displayDate: string; // O que aparece no site, ex: "24 Ago"
   time: string;
   location: string;
+  googleMapsUrl?: string;
   shortDescription: string;
   longDescription: string;
   price: string;
@@ -27,9 +29,11 @@ export const experiences: Experience[] = [
     slug: "cafe-e-pintura",
     title: "Café & Pintura",
     category: "Arte",
-    date: "24 Ago",
+    date: "2024-08-24",
+    displayDate: "24 Ago",
     time: "09:00 - 12:00",
     location: "Asa Norte, Brasília",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Asa+Norte+Brasilia",
     price: "R$ 120",
     vacancies: "2 vagas",
     status: 'available',
@@ -56,9 +60,11 @@ export const experiences: Experience[] = [
     slug: "trilha-e-piquenique",
     title: "Trilha & Piquenique",
     category: "Outdoor",
-    date: "02 Set",
+    date: "2024-09-02",
+    displayDate: "02 Set",
     time: "08:00 - 11:00",
     location: "Parque da Cidade, Brasília",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Parque+da+Cidade+Brasilia",
     price: "R$ 80",
     vacancies: "Esgotado",
     status: 'sold-out',
@@ -85,9 +91,11 @@ export const experiences: Experience[] = [
     slug: "workshop-de-ceramica",
     title: "Workshop de Cerâmica",
     category: "Criatividade",
-    date: "15 Set",
+    date: "2024-09-15",
+    displayDate: "15 Set",
     time: "14:00 - 17:00",
     location: "Lago Sul, Brasília",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Lago+Sul+Brasilia",
     price: "R$ 180",
     vacancies: "4 vagas",
     status: 'available',
@@ -114,9 +122,11 @@ export const experiences: Experience[] = [
     slug: "clube-do-livro",
     title: "Clube do Livro",
     category: "Cultura",
-    date: "10 Out",
+    date: "2024-10-10",
+    displayDate: "10 Out",
     time: "19:00 - 21:00",
     location: "Café Conceito, Asa Sul",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Café+Conceito+Asa+Sul",
     price: "R$ 40",
     vacancies: "10 vagas",
     status: 'available',
@@ -143,9 +153,11 @@ export const experiences: Experience[] = [
     slug: "noite-de-jogos",
     title: "Noite de Jogos",
     category: "Social",
-    date: "25 Out",
+    date: "2024-10-25",
+    displayDate: "25 Out",
     time: "19:30 - 22:30",
     location: "Espaço Coworking, Sudoeste",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Espaço+Coworking+Sudoeste",
     price: "R$ 60",
     vacancies: "8 vagas",
     status: 'available',

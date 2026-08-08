@@ -30,7 +30,24 @@ function ExperienciaIndividual() {
 
   if (!event) return <div>Evento não encontrado.</div>;
 
+  const isRegistrationOpen = () => {
+    if (event.status !== 'available') return false;
+    
+    const eventDate = new Date(event.date);
+    const today = new Date();
+    // Zerar as horas para comparar apenas os dias
+    today.setHours(0, 0, 0, 0);
+    eventDate.setHours(0, 0, 0, 0);
+
+    const diffInDays = (eventDate.getTime() - today.getTime()) / (1000 * 3600 * 24);
+    
+    return diffInDays >= 1;
+  };
+
+  const registrationEnabled = isRegistrationOpen();
+
   const handleRegister = () => {
+    if (!registrationEnabled) return;
     const message = encodeURIComponent(`Olá! Quero participar do evento ${event.title}.`);
     window.open(`https://wa.me/5561999999999?text=${message}`, '_blank');
   };
@@ -51,15 +68,31 @@ function ExperienciaIndividual() {
             <div>
               <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4 tracking-tight">{event.title}</h1>
               <div className="flex flex-wrap gap-6 text-[#5E5E5E] font-bold uppercase tracking-widest text-sm">
-                <span className="flex items-center gap-2"><Calendar size={18} className="text-[#7A3FF2]" /> {event.date}, {event.time}</span>
-                <span className="flex items-center gap-2"><MapPin size={18} className="text-[#7A3FF2]" /> {event.location}</span>
+                <span className="flex items-center gap-2"><Calendar size={18} className="text-[#7A3FF2]" /> {event.displayDate}, {event.time}</span>
+                {event.googleMapsUrl ? (
+                  <a 
+                    href={event.googleMapsUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-2 hover:text-[#7A3FF2] transition-colors"
+                  >
+                    <MapPin size={18} className="text-[#7A3FF2]" /> {event.location}
+                  </a>
+                ) : (
+                  <span className="flex items-center gap-2"><MapPin size={18} className="text-[#7A3FF2]" /> {event.location}</span>
+                )}
               </div>
             </div>
             <button 
               onClick={handleRegister}
-              className="mt-8 md:mt-0 px-10 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-lg hover:bg-[#5E2CCF] transition-all shadow-xl"
+              disabled={!registrationEnabled}
+              className={`mt-8 md:mt-0 px-10 py-5 rounded-full font-bold text-lg transition-all shadow-xl ${
+                registrationEnabled 
+                  ? "bg-[#7A3FF2] text-white hover:bg-[#5E2CCF]" 
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed shadow-none"
+              }`}
             >
-              Quero Participar - {event.price}
+              {registrationEnabled ? `Quero Participar - ${event.price}` : "Inscrições Encerradas"}
             </button>
           </div>
 
@@ -138,9 +171,14 @@ function ExperienciaIndividual() {
           <h2 className="text-5xl font-serif font-bold mb-10 tracking-tight">Sua próxima amizade pode começar aqui.</h2>
           <button 
             onClick={handleRegister}
-            className="px-12 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-xl hover:bg-[#5E2CCF] transition-all shadow-2xl"
+            disabled={!registrationEnabled}
+            className={`px-12 py-5 rounded-full font-bold text-xl transition-all shadow-2xl ${
+              registrationEnabled 
+                ? "bg-[#7A3FF2] text-white hover:bg-[#5E2CCF]" 
+                : "bg-gray-300 text-gray-500 cursor-not-allowed shadow-none"
+            }`}
           >
-            Quero Participar
+            {registrationEnabled ? "Quero Participar" : "Inscrições Encerradas"}
           </button>
         </div>
       </section>

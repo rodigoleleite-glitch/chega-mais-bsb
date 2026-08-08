@@ -51,7 +51,7 @@ function Experiencias() {
               </div>
               <div className="p-10">
                 <div className="flex gap-4 text-xs font-bold text-[#5E5E5E] mb-6 uppercase tracking-widest">
-                  <span className="flex items-center gap-1"><Calendar size={14} /> {e.date}</span>
+                  <span className="flex items-center gap-1"><Calendar size={14} /> {e.displayDate}</span>
                   <span className="flex items-center gap-1"><MapPin size={14} /> {e.location}</span>
                 </div>
                 <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
