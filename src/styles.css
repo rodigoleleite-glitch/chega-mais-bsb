@@ -145,4 +145,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+
+  a, button, [role="button"], .cursor-pointer {
+    cursor: pointer;
+  }
 }
