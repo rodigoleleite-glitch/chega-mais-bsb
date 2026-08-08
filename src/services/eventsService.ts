@@ -37,29 +37,21 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
           skipEmptyLines: true,
           complete: (results) => {
             const data = results.data.map((row: any) => {
-              // Função para tratar o caminho da imagem
-              const formatImageUrl = (imagePath: string) => {
-                if (!imagePath) return "/placeholder.svg"; // Fallback caso esteja vazio
+              // Função para transformar links do Google Drive em links diretos de imagem
+              // e manter links diretos
+              const formatImageUrl = (url: string) => {
+                if (!url) return "/placeholder.svg";
                 
-                // Se o usuário digitou apenas o nome do arquivo (ex: "clara.jpg")
-                // ou se já começou com "/", garantimos que aponte para /imagens/
-                const fileName = imagePath.trim();
-                
-                // Se já for uma URL completa (http), mantemos (opcional, para flexibilidade)
-                if (fileName.startsWith('http')) return fileName;
-                
-                // Remove "/" inicial se houver para padronizar
-                const cleanFileName = fileName.startsWith('/') ? fileName.substring(1) : fileName;
-                
-                // Se o nome do arquivo já contém "imagens/", não duplicamos
-                if (cleanFileName.startsWith('imagens/')) {
-                  return `/${cleanFileName}`;
+                // Suporte para links do Google Drive
+                const driveMatch = url.match(/\/(?:d|file\/d)\/([a-zA-Z0-9_-]+)/);
+                if (driveMatch && driveMatch[1]) {
+                  return `https://lh3.googleusercontent.com/u/0/d/${driveMatch[1]}`;
                 }
                 
-                return `/imagens/${cleanFileName}`;
+                return url.trim();
               };
 
-              // Função para limpar links curtos do Forms que podem dar erro
+              // Função para limpar links curtos do Forms
               const formatFormUrl = (url: string) => {
                 if (!url) return "";
                 return url.trim();
@@ -91,6 +83,7 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
       console.error("Error fetching sheets:", error);
       return [];
     }
+  });
   });
 
 export async function getEvents() {
