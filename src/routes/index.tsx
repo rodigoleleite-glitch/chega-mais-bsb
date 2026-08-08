@@ -222,9 +222,9 @@ function Index() {
           </div>
           <div className="grid md:grid-cols-3 gap-10">
             {[
-              { title: "Café & Pintura", date: "24 Ago", loc: "Asa Norte", tag: "Artes", vacancies: "2 vagas" },
-              { title: "Workshop de Cerâmica", date: "15 Set", loc: "Lago Sul", tag: "Manual", vacancies: "4 vagas" },
-              { title: "Trilha & Piquenique", date: "02 Set", loc: "Parque", tag: "Outdoor", vacancies: "Esgotado" }
+              { title: "Café & Pintura", date: "24 Ago", loc: "Asa Norte", tag: "Artes", vacancies: "2 vagas", slug: "cafe-e-pintura" },
+              { title: "Workshop de Cerâmica", date: "15 Set", loc: "Lago Sul", tag: "Manual", vacancies: "4 vagas", slug: "workshop-de-ceramica" },
+              { title: "Trilha & Piquenique", date: "02 Set", loc: "Parque", tag: "Outdoor", vacancies: "Esgotado", slug: "trilha-e-piquenique" }
             ].map((e, i) => (
               <motion.div key={i} whileHover={{ y: -10 }} className="bg-[#FAF9F8] rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all">
                 <div className="h-72 overflow-hidden relative">
@@ -239,7 +239,7 @@ function Index() {
                   <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
                   <div className="flex justify-between items-center mt-10">
                     <span className="text-sm font-bold text-[#5E5E5E]">{e.vacancies}</span>
-                    <Link to="/experiencias" className="px-6 py-3 bg-[#7A3FF2] text-white rounded-full font-bold text-sm hover:bg-[#5E2CCF] transition-all">Participar</Link>
+                    <Link to={`/experiencias/${e.slug}`} className="px-6 py-3 bg-[#7A3FF2] text-white rounded-full font-bold text-sm hover:bg-[#5E2CCF] transition-all">Participar</Link>
                   </div>
                 </div>
               </motion.div>
