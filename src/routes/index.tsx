@@ -78,6 +78,46 @@ function Index() {
         </div>
       </section>
 
+      {/* Talvez você esteja procurando exatamente isso */}
+      <section className="py-32 bg-[#FBF9F7] px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-serif mb-12">Talvez você esteja procurando exatamente isso.</h2>
+          <div className="grid md:grid-cols-2 gap-8 text-left">
+            {["Quero conhecer pessoas novas.", "Minha rotina ficou repetitiva.", "Tenho vontade de fazer algo diferente.", "Quero um lugar onde eu possa simplesmente chegar."].map((text, i) => (
+              <div key={i} className="p-8 bg-white border border-black/5 rounded-2xl">
+                <p className="font-medium text-[#4A3D66]">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* O que torna o Chega Mais diferente? */}
+      <section className="py-32 px-8 max-w-7xl mx-auto">
+        <h2 className="text-4xl font-serif mb-20 text-center">O que torna o Chega Mais diferente?</h2>
+        <div className="grid md:grid-cols-3 gap-12 text-center">
+          {[
+            { title: "Comunidade", desc: "Não somos sobre eventos, somos sobre as pessoas que você encontra neles." },
+            { title: "Conexões Reais", desc: "Criamos um ambiente seguro para conversas profundas e amizades duradouras." },
+            { title: "Brasília Viva", desc: "Redescubra a cidade através de experiências que fogem do óbvio." }
+          ].map((item, i) => (
+            <div key={i} className="space-y-4">
+              <div className="w-16 h-16 bg-[#E0D7ED] rounded-full mx-auto" />
+              <h3 className="text-xl font-medium">{item.title}</h3>
+              <p className="text-[#666] leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Não é sobre o evento. */}
+      <section className="py-32 bg-[#4A3D66] text-white px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-serif mb-8 leading-tight italic">"Não é sobre o evento. É sobre o que acontece depois dele."</h2>
+          <p className="text-xl font-light opacity-90">A verdadeira mágica começa quando as luzes apagam, o evento termina e você percebe que, além da experiência, você ganhou uma nova amiga.</p>
+        </div>
+      </section>
+
       {/* Como Funciona */}
       <section className="py-32 px-8 max-w-5xl mx-auto">
         <h2 className="text-4xl font-serif mb-20 text-center">Como funciona</h2>
@@ -94,6 +134,23 @@ function Index() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Galeria */}
+      <section className="py-32 bg-[#FBF9F7] px-8">
+        <h2 className="text-4xl font-serif mb-20 text-center">Momentos Chega Mais</h2>
+        <div className="columns-2 md:columns-3 gap-6 space-y-6 max-w-7xl mx-auto">
+          {[1,2,3,4,5,6].map((i) => (
+            <div key={i} className="break-inside-avoid bg-[#E0D7ED] rounded-2xl aspect-[3/4] hover:scale-[1.02] transition-transform" />
+          ))}
+        </div>
+      </section>
+
+      {/* Depoimentos */}
+      <section className="py-32 px-8 max-w-4xl mx-auto text-center">
+        <h2 className="text-4xl font-serif mb-20">O que elas dizem</h2>
+        <blockquote className="text-2xl font-serif italic mb-8">"O Chega Mais transformou minha rotina em Brasília. Finalmente encontrei um lugar onde me sinto acolhida."</blockquote>
+        <cite className="not-italic font-medium text-[#4A3D66]">— Maria Silva</cite>
       </section>
 
       {/* Próximas Experiências */}
