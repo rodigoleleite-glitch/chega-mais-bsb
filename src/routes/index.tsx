@@ -6,11 +6,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { getActiveEvents, type SheetEvent as Event } from "@/services/eventsService";
 
 
-import logoAsset from "@/assets/logo_purple.jpg.asset.json";
-import communityAsset from "@/assets/community_group.jpg.asset.json";
-import workshopAsset from "@/assets/workshop_table.jpg.asset.json";
-import smilingAsset from "@/assets/group_smiling.jpg.asset.json";
-import portraitAsset from "@/assets/group_portrait.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
