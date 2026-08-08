@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useSpring, type Variants } from "framer-motion";
 import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, ChevronRight, Check } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
+import { events } from "@/data/events";
+
 
 import logoAsset from "@/assets/logo_purple.jpg.asset.json";
 import communityAsset from "@/assets/community_group.jpg.asset.json";
@@ -26,7 +28,9 @@ export const Route = createFileRoute("/")({
 
 
 function Index() {
+  const activeEvents = events.filter(e => e.active);
   const { scrollYProgress } = useScroll();
+
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   const containerVariants = {
@@ -221,24 +225,20 @@ function Index() {
 
           </div>
           <div className="grid md:grid-cols-3 gap-10">
-            {[
-              { title: "Café & Pintura", date: "24 Ago", loc: "Asa Norte", tag: "Artes", vacancies: "2 vagas", slug: "cafe-e-pintura" },
-              { title: "Workshop de Cerâmica", date: "15 Set", loc: "Lago Sul", tag: "Manual", vacancies: "4 vagas", slug: "workshop-de-ceramica" },
-              { title: "Trilha & Piquenique", date: "02 Set", loc: "Parque", tag: "Outdoor", vacancies: "Esgotado", slug: "trilha-e-piquenique" }
-            ].map((e, i) => (
-              <motion.div key={i} whileHover={{ y: -10 }} className="bg-[#FAF9F8] rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all">
+            {activeEvents.map((e, i) => (
+              <motion.div key={e.id} whileHover={{ y: -10 }} className="bg-[#FAF9F8] rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all">
                 <div className="h-72 overflow-hidden relative">
-                  <img src={workshopAsset.url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <div className="absolute top-6 left-6 px-4 py-1.5 bg-white/90 rounded-full text-xs font-bold uppercase text-[#7A3FF2]">{e.tag}</div>
+                  <img src={e.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute top-6 left-6 px-4 py-1.5 bg-white/90 rounded-full text-xs font-bold uppercase text-[#7A3FF2]">{e.category}</div>
                 </div>
                 <div className="p-10">
                   <div className="flex gap-4 text-xs font-bold text-[#5E5E5E] mb-6 uppercase tracking-widest">
                     <span className="flex items-center gap-1"><Calendar size={14} /> {e.date}</span>
-                    <span className="flex items-center gap-1"><MapPin size={14} /> {e.loc}</span>
+                    <span className="flex items-center gap-1"><MapPin size={14} /> {e.location}</span>
                   </div>
                   <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
                   <div className="flex justify-between items-center mt-10">
-                    <span className="text-sm font-bold text-[#5E5E5E]">{e.vacancies}</span>
+                    <span className="text-sm font-bold text-[#5E5E5E]">{e.registrationUrl ? "Disponível" : "Encerrado"}</span>
                     <Link to={`/experiencias/${e.slug}`} className="px-6 py-3 bg-[#7A3FF2] text-white rounded-full font-bold text-sm hover:bg-[#5E2CCF] transition-all">Participar</Link>
                   </div>
                 </div>
