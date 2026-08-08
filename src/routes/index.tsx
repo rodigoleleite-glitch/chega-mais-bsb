@@ -77,7 +77,7 @@ function Index() {
               { title: "Fazer algo diferente sem precisar ir sozinha.", icon: Heart },
               { title: "Um lugar para ser você.", icon: Sparkles }
             ].map((item, i) => (
-              <motion.div key={i} whileHover={{ y: -5 }} className="p-8 bg-white border border-black/5 rounded-2xl shadow-sm group transition-all">
+              <motion.div key={i} whileHover={{ y: -10, scale: 1.02 }} className="p-8 bg-white border border-black/5 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
                 <div className="w-12 h-12 bg-[#FAF8F6] rounded-full mb-6 flex items-center justify-center group-hover:bg-[#4A3D66] group-hover:text-white transition-colors duration-500">
                   <item.icon size={20} />
                 </div>
