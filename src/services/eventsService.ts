@@ -36,22 +36,41 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
           header: true,
           skipEmptyLines: true,
           complete: (results) => {
-            const data = results.data.map((row: any) => ({
-              slug: row.slug || "",
-              featured: String(row.featured).toLowerCase() === 'true',
-              status: row.status === 'encerrado' ? 'encerrado' : 'aberto',
-              title: row.title || "",
-              category: row.category || "",
-              date: row.date || "",
-              time: row.time || "",
-              location: row.location || "",
-              mapsUrl: row.mapsUrl || "",
-              formUrl: row.formUrl || "",
-              image: row.image || "",
-              shortDescription: row.shortDescription || "",
-              description: row.description || "",
-              spots: row.spots || "",
-            }));
+            const data = results.data.map((row: any) => {
+              // Função para transformar links do Google Drive em links diretos de imagem
+              const formatDriveUrl = (url: string) => {
+                if (!url) return "";
+                const driveMatch = url.match(/\/(?:d|file\/d)\/([a-zA-Z0-9_-]+)/);
+                if (driveMatch && driveMatch[1]) {
+                  return `https://lh3.googleusercontent.com/u/0/d/${driveMatch[1]}`;
+                }
+                return url;
+              };
+
+              // Função para limpar links curtos do Forms que podem dar erro
+              const formatFormUrl = (url: string) => {
+                if (!url) return "";
+                // Remove espaços em branco que podem vir da planilha
+                return url.trim();
+              };
+
+              return {
+                slug: row.slug || "",
+                featured: String(row.featured).toLowerCase() === 'true',
+                status: row.status === 'encerrado' ? 'encerrado' : 'aberto',
+                title: row.title || "",
+                category: row.category || "",
+                date: row.date || "",
+                time: row.time || "",
+                location: row.location || "",
+                mapsUrl: row.mapsUrl || "",
+                formUrl: formatFormUrl(row.formUrl),
+                image: formatDriveUrl(row.image),
+                shortDescription: row.shortDescription || "",
+                description: row.description || "",
+                spots: row.spots || "",
+              };
+            });
             resolve(data as SheetEvent[]);
           },
           error: (error: any) => reject(error),
