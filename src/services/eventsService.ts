@@ -70,7 +70,17 @@ export async function getEvents() {
   return allEvents.sort((a, b) => {
     if (a.featured && !b.featured) return -1;
     if (!a.featured && b.featured) return 1;
-    return new Date(a.date).getTime() - new Date(b.date).getTime();
+    
+    // Parse dates in DD/MM/YYYY format for sorting
+    const parseDate = (d: string) => {
+      const parts = d.split('/');
+      if (parts.length === 3) {
+        return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime();
+      }
+      return new Date(d).getTime();
+    };
+    
+    return parseDate(a.date) - parseDate(b.date);
   });
 }
 
