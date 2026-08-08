@@ -84,7 +84,6 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
       return [];
     }
   });
-  });
 
 export async function getEvents() {
   const allEvents = await fetchEventsFromSheets();
