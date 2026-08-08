@@ -6,8 +6,23 @@ import { Calendar, MapPin, Check, Camera, ArrowRight, Sparkles, HelpCircle, Chev
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/experiencias/$slug")({
+  head: ({ params }) => {
+    const event = experiences.find((e) => e.slug === params.slug);
+    return {
+      meta: [
+        { title: `${event?.title || 'Experiência'} | Chega Mais BSB` },
+        { name: "description", content: event?.shortDescription || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
+        { property: "og:title", content: `${event?.title || 'Experiência'} | Chega Mais BSB` },
+        { property: "og:description", content: event?.shortDescription || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary_large_image" },
+        ...(event?.imageUrl ? [{ property: "og:image", content: event.imageUrl }, { name: "twitter:image", content: event.imageUrl }] : []),
+      ],
+    };
+  },
   component: ExperienciaIndividual,
 });
+
 
 function ExperienciaIndividual() {
   const { slug } = useParams({ from: "/experiencias/$slug" });

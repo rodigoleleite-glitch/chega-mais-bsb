@@ -10,8 +10,19 @@ import smilingAsset from "@/assets/group_smiling.jpg.asset.json";
 import portraitAsset from "@/assets/group_portrait.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Chega Mais BSB | Comunidade Feminina em Brasília" },
+      { name: "description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
+      { property: "og:title", content: "Chega Mais BSB | Comunidade Feminina em Brasília" },
+      { property: "og:description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
+
 
 
 function Index() {
