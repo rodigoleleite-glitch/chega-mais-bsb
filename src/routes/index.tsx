@@ -162,13 +162,28 @@ function Index() {
       </section>
 
       {/* Nossa História */}
-      <section className="py-24 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-        <div>
+      <section className="py-32 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-4xl font-serif font-semibold mb-8">Por trás do Chega Mais existem mulheres.</h2>
-          <p className="text-lg leading-relaxed text-[#666] mb-6">Somos quatro mulheres diferentes, com personalidades, sonhos e rotinas únicas. Mas acreditamos na mesma coisa: ninguém deveria precisar viver tudo sozinha.</p>
+          <p className="text-lg leading-relaxed text-[#666] mb-6 italic border-l-4 border-[#4A3D66]/20 pl-6">Somos quatro mulheres diferentes, com personalidades, sonhos e rotinas únicas. Mas acreditamos na mesma coisa: ninguém deveria precisar viver tudo sozinha.</p>
           <p className="text-lg leading-relaxed text-[#666] mb-8">O Chega Mais nasceu para ser um lugar onde mulheres possam chegar exatamente como são.</p>
-        </div>
-        <img src={portraitAsset.url} alt="Fundadoras" className="rounded-3xl shadow-xl" />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: 50, rotate: 2 }}
+          whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          whileHover={{ scale: 1.02 }}
+          className="relative"
+        >
+          <div className="absolute -inset-4 bg-[#4A3D66]/5 rounded-3xl -z-10 animate-pulse" />
+          <img src={portraitAsset.url} alt="Fundadoras" className="rounded-3xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" />
+        </motion.div>
       </section>
 
       {/* Momentos (Galeria) */}
