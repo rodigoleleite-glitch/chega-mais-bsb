@@ -408,9 +408,24 @@ function Index() {
       </section>
 
       {/* CTA Faixa de Impacto */}
-      <section className="py-24 bg-[#4A3D66] text-white text-center px-8">
-          <h2 className="text-4xl md:text-6xl font-serif font-bold italic mb-6 leading-tight">Não é sobre o evento.<br/>É sobre o que acontece depois dele.</h2>
+      <section className="py-32 bg-[#4A3D66] text-white text-center px-8 relative overflow-hidden">
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.1, 1],
+            rotate: [0, 5, 0]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_transparent_70%)]"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative z-10"
+        >
+          <h2 className="text-4xl md:text-6xl font-serif font-bold italic mb-8 leading-tight">Não é sobre o evento.<br/>É sobre o que acontece depois dele.</h2>
           <p className="text-xl font-light opacity-80 italic max-w-xl mx-auto">As melhores amizades geralmente começam quando alguém decide aceitar um convite.</p>
+        </motion.div>
       </section>
 
       {/* CTA Final */}
