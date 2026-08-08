@@ -98,12 +98,14 @@ export const deleteExperience = createServerFn({ method: "POST" })
   });
 
 export const checkIsAdmin = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
+  .handler(async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return false;
+
+    const { data, error } = await supabase
       .from('user_roles')
       .select('role')
-      .eq('user_id', context.userId)
+      .eq('user_id', user.id)
       .eq('role', 'admin')
       .single();
     
