@@ -345,7 +345,13 @@ function Index() {
             </a>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-3 gap-8"
+          >
             {[
               { 
                 title: "Café & Pintura", 
