@@ -53,9 +53,10 @@ function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F6] text-[#2D2926] font-sans selection:bg-[#4A3D66] selection:text-white">
+    <div className="min-h-screen bg-[#FAF8F6] text-[#2D2926] font-sans selection:bg-[#4A3D66] selection:text-white overflow-x-hidden">
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#4A3D66] origin-left z-[60]" style={{ scaleX }} />
       {/* Header */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 transition-all duration-500 ${isScrolled ? "bg-white/90 backdrop-blur-md border-b border-black/5 py-3" : "bg-transparent text-white"}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 transition-all duration-700 ${isScrolled ? "bg-white/80 backdrop-blur-xl border-b border-black/5 py-3" : "bg-transparent text-white"}`}>
         <div className="flex items-center gap-2">
             <img src={logoAsset.url} alt="Logo" className="w-10 h-10 rounded-full" />
             <span className="font-serif text-xl font-bold tracking-tight">Chega Mais BSB</span>
