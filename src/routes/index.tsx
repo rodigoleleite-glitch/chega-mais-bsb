@@ -124,22 +124,40 @@ function Index() {
       {/* Seção Talvez... */}
       <section className="py-24 px-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-serif font-semibold text-center mb-16">Talvez você esteja procurando exatamente isso.</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-serif font-semibold text-center mb-16"
+          >
+            Talvez você esteja procurando exatamente isso.
+          </motion.h2>
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {[
               { title: "Conhecer pessoas novas sem pressão.", icon: Users },
               { title: "Ter um motivo para sair da rotina.", icon: Calendar },
               { title: "Fazer algo diferente sem precisar ir sozinha.", icon: Heart },
               { title: "Um lugar para ser você.", icon: Sparkles }
             ].map((item, i) => (
-              <motion.div key={i} whileHover={{ y: -10, scale: 1.02 }} className="p-8 bg-white border border-black/5 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
+              <motion.div 
+                key={i} 
+                variants={itemVariants}
+                whileHover={{ y: -10, scale: 1.02, rotateZ: i % 2 === 0 ? 1 : -1 }} 
+                className="p-8 bg-white border border-black/5 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300"
+              >
                 <div className="w-12 h-12 bg-[#FAF8F6] rounded-full mb-6 flex items-center justify-center group-hover:bg-[#4A3D66] group-hover:text-white transition-colors duration-500">
                   <item.icon size={20} />
                 </div>
                 <p className="font-serif text-xl font-medium leading-snug text-[#2D2926]">{item.title}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
