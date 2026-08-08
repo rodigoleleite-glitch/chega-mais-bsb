@@ -1,7 +1,8 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
 import { experiences } from "@/data/experiences";
-import { Calendar, MapPin, Check, Camera, ArrowRight, Sparkles } from "lucide-react";
+import { Calendar, MapPin, Check, Camera, ArrowRight, Sparkles, HelpCircle, ChevronDown } from "lucide-react";
+
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/experiencias/$slug")({
@@ -70,9 +71,50 @@ function ExperienciaIndividual() {
                 </div>
               ))}
             </div>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Galeria */}
+      <section className="py-20 px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-serif font-bold mb-12 text-center tracking-tight">Galeria de Experiências</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {experiences.slice(0, 4).map((e, i) => (
+              <div key={i} className="aspect-square rounded-2xl overflow-hidden group">
+                <img src={e.imageUrl} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 px-8 bg-[#FAF9F8]">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-serif font-bold mb-12 text-center tracking-tight">Perguntas Frequentes</h2>
+          <div className="space-y-4">
+            {[
+              { q: "Posso ir sozinha?", a: "Com certeza! A maioria das mulheres vai sozinha. O Chega Mais foi criado exatamente para facilitar essas novas conexões." },
+              { q: "Preciso conhecer alguém?", a: "Não! Nosso papel é justamente quebrar o gelo e garantir que você se sinto acolhida desde o primeiro minuto." },
+              { q: "Posso cancelar?", a: "Sim, cancelamentos com até 48h de antecedência recebem reembolso integral." },
+              { q: "Como funciona o pagamento?", a: "O pagamento é feito via PIX ou cartão de crédito no momento da inscrição através do nosso contato." }
+            ].map((faq, i) => (
+              <details key={i} className="group bg-white rounded-2xl border border-black/5 overflow-hidden">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none font-bold text-[#1A1A1A]">
+                  <span className="flex items-center gap-3"><HelpCircle size={20} className="text-[#7A3FF2]" /> {faq.q}</span>
+                  <ChevronDown size={20} className="text-[#5E5E5E] group-open:rotate-180 transition-transform" />
+                </summary>
+                <div className="px-6 pb-6 text-[#5E5E5E] leading-relaxed">
+                  {faq.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* CTA Final */}
       <section className="py-32 px-8 bg-white text-center">
