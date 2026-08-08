@@ -72,14 +72,20 @@ function ExperienciaIndividual() {
               <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4 tracking-tight">{event.title}</h1>
               <div className="flex flex-wrap gap-6 text-[#5E5E5E] font-bold uppercase tracking-widest text-sm">
                 <span className="flex items-center gap-2"><Calendar size={18} className="text-[#7A3FF2]" /> {event.date}, {event.time}</span>
-                <a 
-                  href={event.mapsUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center gap-2 hover:text-[#7A3FF2] transition-colors"
-                >
-                  <MapPin size={18} className="text-[#7A3FF2]" /> {event.location}
-                </a>
+                {event.mapsUrl ? (
+                  <a 
+                    href={event.mapsUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-2 hover:text-[#7A3FF2] transition-colors"
+                  >
+                    <MapPin size={18} className="text-[#7A3FF2]" /> {event.location}
+                  </a>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <MapPin size={18} className="text-[#7A3FF2]" /> {event.location}
+                  </span>
+                )}
               </div>
             </div>
             <button 
