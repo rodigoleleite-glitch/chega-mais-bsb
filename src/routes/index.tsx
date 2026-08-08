@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, type Variants } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, Music, ChevronRight } from "lucide-react";
 
