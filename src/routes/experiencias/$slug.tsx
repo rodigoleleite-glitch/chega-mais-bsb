@@ -1,6 +1,6 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
-import { experiences } from "@/data/experiences";
+import { events } from "@/data/events";
 import { Calendar, MapPin, Check, Camera, ArrowRight, Sparkles, HelpCircle, ChevronDown } from "lucide-react";
 
 import { motion } from "framer-motion";
