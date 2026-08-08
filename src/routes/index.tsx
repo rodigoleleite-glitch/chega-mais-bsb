@@ -14,7 +14,7 @@ function Index() {
     <div className="min-h-screen bg-[#FAF8F6] text-[#2D2926] font-sans">
       {/* Header */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 transition-all duration-300">
-        <span className="text-2xl font-serif">Chega Mais BSB</span>
+        <span className="text-3xl font-serif">Chega Mais BSB</span>
         <div className="flex gap-8">
           {["Sobre", "Experiências", "Comunidade"].map((item) => (
             <a key={item} href="#" className="text-sm font-medium hover:text-[#4A3D66] transition-colors">
