@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminExperienciasRouteImport } from './routes/admin/experiencias'
 import { Route as ExperienciasIndexRouteImport } from './routes/experiencias/index'
 import { Route as ExperienciasSlugRouteImport } from './routes/experiencias/$slug'
+import { Route as AdminExperienciasNovaRouteImport } from './routes/admin/experiencias/nova'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,43 +35,61 @@ const ExperienciasSlugRoute = ExperienciasSlugRouteImport.update({
   path: '/experiencias/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminExperienciasNovaRoute = AdminExperienciasNovaRouteImport.update({
+  id: '/nova',
+  path: '/nova',
+  getParentRoute: () => AdminExperienciasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin/experiencias': typeof AdminExperienciasRoute
+  '/admin/experiencias': typeof AdminExperienciasRouteWithChildren
   '/experiencias/$slug': typeof ExperienciasSlugRoute
   '/experiencias/': typeof ExperienciasIndexRoute
+  '/admin/experiencias/nova': typeof AdminExperienciasNovaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin/experiencias': typeof AdminExperienciasRoute
+  '/admin/experiencias': typeof AdminExperienciasRouteWithChildren
   '/experiencias/$slug': typeof ExperienciasSlugRoute
   '/experiencias': typeof ExperienciasIndexRoute
+  '/admin/experiencias/nova': typeof AdminExperienciasNovaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin/experiencias': typeof AdminExperienciasRoute
+  '/admin/experiencias': typeof AdminExperienciasRouteWithChildren
   '/experiencias/$slug': typeof ExperienciasSlugRoute
   '/experiencias/': typeof ExperienciasIndexRoute
+  '/admin/experiencias/nova': typeof AdminExperienciasNovaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/admin/experiencias' | '/experiencias/$slug' | '/experiencias/'
+    | '/'
+    | '/admin/experiencias'
+    | '/experiencias/$slug'
+    | '/experiencias/'
+    | '/admin/experiencias/nova'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin/experiencias' | '/experiencias/$slug' | '/experiencias'
+  to:
+    | '/'
+    | '/admin/experiencias'
+    | '/experiencias/$slug'
+    | '/experiencias'
+    | '/admin/experiencias/nova'
   id:
     | '__root__'
     | '/'
     | '/admin/experiencias'
     | '/experiencias/$slug'
     | '/experiencias/'
+    | '/admin/experiencias/nova'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminExperienciasRoute: typeof AdminExperienciasRoute
+  AdminExperienciasRoute: typeof AdminExperienciasRouteWithChildren
   ExperienciasSlugRoute: typeof ExperienciasSlugRoute
   ExperienciasIndexRoute: typeof ExperienciasIndexRoute
 }
@@ -105,12 +124,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExperienciasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/experiencias/nova': {
+      id: '/admin/experiencias/nova'
+      path: '/nova'
+      fullPath: '/admin/experiencias/nova'
+      preLoaderRoute: typeof AdminExperienciasNovaRouteImport
+      parentRoute: typeof AdminExperienciasRoute
+    }
   }
 }
 
+interface AdminExperienciasRouteChildren {
+  AdminExperienciasNovaRoute: typeof AdminExperienciasNovaRoute
+}
+
+const AdminExperienciasRouteChildren: AdminExperienciasRouteChildren = {
+  AdminExperienciasNovaRoute: AdminExperienciasNovaRoute,
+}
+
+const AdminExperienciasRouteWithChildren =
+  AdminExperienciasRoute._addFileChildren(AdminExperienciasRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminExperienciasRoute: AdminExperienciasRoute,
+  AdminExperienciasRoute: AdminExperienciasRouteWithChildren,
   ExperienciasSlugRoute: ExperienciasSlugRoute,
   ExperienciasIndexRoute: ExperienciasIndexRoute,
 }

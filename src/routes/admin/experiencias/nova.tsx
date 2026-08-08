@@ -62,9 +62,11 @@ function NovaExperiencia() {
     setLoading(true);
     try {
       await createExpFn({
-        ...formData,
-        includes: formData.includes.split("\n").filter(i => i.trim()),
-        for_who: formData.for_who.split("\n").filter(w => w.trim()),
+        data: {
+            ...formData,
+            includes: formData.includes.split("\n").filter(i => i.trim()),
+            for_who: formData.for_who.split("\n").filter(w => w.trim()),
+        }
       });
       toast.success("Experiência criada com sucesso!");
       navigate({ to: "/admin/experiencias" });
