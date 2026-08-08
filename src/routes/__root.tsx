@@ -77,13 +77,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Chega Mais BSB | Comunidade Feminina em Brasília" },
-      { name: "description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
-      { name: "author", content: "Chega Mais BSB" },
-      { property: "og:title", content: "Chega Mais BSB | Comunidade Feminina em Brasília" },
-      { property: "og:description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {

@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useSpring, type Variants } from "framer-motion";
 import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, ChevronRight, Check } from "lucide-react";
+import { Navbar } from "@/components/layout/Navbar";
 
 import logoAsset from "@/assets/logo_purple.jpg.asset.json";
 import communityAsset from "@/assets/community_group.jpg.asset.json";
@@ -9,8 +10,20 @@ import smilingAsset from "@/assets/group_smiling.jpg.asset.json";
 import portraitAsset from "@/assets/group_portrait.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Chega Mais BSB | Comunidade Feminina em Brasília" },
+      { name: "description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
+      { property: "og:title", content: "Chega Mais BSB | Comunidade Feminina em Brasília" },
+      { property: "og:description", content: "O Chega Mais é uma comunidade para mulheres que buscam amizades reais, experiências únicas e acolhimento em Brasília. Venha como você é." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
+
+
 
 function Index() {
   const { scrollYProgress } = useScroll();
@@ -28,7 +41,9 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-[#FAF9F8] text-[#1A1A1A] font-sans selection:bg-[#7A3FF2] selection:text-white overflow-x-hidden">
+      <Navbar />
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#7A3FF2] origin-left z-[60]" style={{ scaleX }} />
+
       
       {/* Hero */}
       <section className="relative h-screen w-full flex flex-col justify-center items-center px-4 overflow-hidden">
@@ -45,8 +60,9 @@ function Index() {
             Você não precisa viver Brasília sozinha.
           </motion.h1>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="flex flex-col md:flex-row gap-6 justify-center">
-            <button className="px-10 py-4 bg-[#7A3FF2] text-white rounded-full font-bold text-lg hover:bg-[#5E2CCF] transition-all">Quero participar</button>
-            <button className="px-10 py-4 border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all">Conhecer experiências</button>
+            <Link to="/experiencias" className="px-10 py-4 bg-[#7A3FF2] text-white rounded-full font-bold text-lg hover:bg-[#5E2CCF] transition-all text-center">Quero participar</Link>
+            <Link to="/experiencias" className="px-10 py-4 border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all text-center">Conhecer experiências</Link>
+
           </motion.div>
         </div>
       </section>
@@ -199,9 +215,10 @@ function Index() {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-end mb-20">
             <h2 className="text-4xl md:text-6xl font-serif font-semibold tracking-tight">Próximas Experiências</h2>
-            <button className="flex items-center gap-2 text-[#7A3FF2] font-bold border-b-2 border-[#7A3FF2]/20 pb-2 hover:border-[#7A3FF2] transition-all">
+            <Link to="/experiencias" className="flex items-center gap-2 text-[#7A3FF2] font-bold border-b-2 border-[#7A3FF2]/20 pb-2 hover:border-[#7A3FF2] transition-all">
               Ver calendário <ArrowRight size={20} />
-            </button>
+            </Link>
+
           </div>
           <div className="grid md:grid-cols-3 gap-10">
             {[
@@ -222,7 +239,7 @@ function Index() {
                   <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
                   <div className="flex justify-between items-center mt-10">
                     <span className="text-sm font-bold text-[#5E5E5E]">{e.vacancies}</span>
-                    <button className="px-6 py-3 bg-[#7A3FF2] text-white rounded-full font-bold text-sm hover:bg-[#5E2CCF] transition-all">Participar</button>
+                    <Link to="/experiencias" className="px-6 py-3 bg-[#7A3FF2] text-white rounded-full font-bold text-sm hover:bg-[#5E2CCF] transition-all">Participar</Link>
                   </div>
                 </div>
               </motion.div>
@@ -250,8 +267,9 @@ function Index() {
           <h2 className="text-5xl md:text-8xl font-serif font-bold mb-10 tracking-tighter leading-[0.9]">Talvez sua próxima amizade esteja a uma inscrição de distância.</h2>
           <p className="text-xl md:text-2xl font-serif italic mb-16 text-[#5E5E5E]">Você não precisa chegar acompanhada.<br/>Você só precisa chegar.</p>
           <div className="flex flex-col md:flex-row gap-6 justify-center">
-            <button className="px-12 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-xl hover:bg-[#5E2CCF] transition-all shadow-2xl">Quero participar</button>
-            <button className="px-12 py-5 border border-black/10 rounded-full font-bold text-xl hover:bg-black/5 transition-all">Conhecer experiências</button>
+            <Link to="/experiencias" className="px-12 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-xl hover:bg-[#5E2CCF] transition-all shadow-2xl text-center">Quero participar</Link>
+            <Link to="/experiencias" className="px-12 py-5 border border-black/10 rounded-full font-bold text-xl hover:bg-black/5 transition-all text-center">Conhecer experiências</Link>
+
           </div>
         </motion.div>
       </section>
