@@ -19,8 +19,9 @@ export interface SheetEvent {
   spots: string;
 }
 
-// URL da planilha publicada como CSV (Exemplo: https://docs.google.com/spreadsheets/d/e/.../pub?output=csv)
-const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR6zOqQhHq-9r8q7-8X-v3r9s0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0/pub?output=csv";
+// URL da planilha publicada como CSV
+// Link original: https://docs.google.com/spreadsheets/d/1os--AybmZh6xiclGfDtB5lqy2bPEQwDlrLDGwsQNQho/edit?usp=sharing
+const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/1os--AybmZh6xiclGfDtB5lqy2bPEQwDlrLDGwsQNQho/gviz/tq?tqx=out:csv";
 
 export const fetchEventsFromSheets = createServerFn({ method: "GET" })
   .handler(async () => {
