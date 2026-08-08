@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useSpring, type Variants } from "framer-motion";
 import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, ChevronRight, Check } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
+import { events } from "@/data/events";
+
 
 import logoAsset from "@/assets/logo_purple.jpg.asset.json";
 import communityAsset from "@/assets/community_group.jpg.asset.json";
@@ -26,7 +28,9 @@ export const Route = createFileRoute("/")({
 
 
 function Index() {
+  const activeEvents = events.filter(e => e.active);
   const { scrollYProgress } = useScroll();
+
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   const containerVariants = {
