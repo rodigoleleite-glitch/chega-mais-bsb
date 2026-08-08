@@ -39,7 +39,7 @@ function Index() {
           transition={{ duration: 1 }}
           className="relative z-10 text-center max-w-4xl text-white"
         >
-          <h1 className="text-6xl md:text-8xl font-serif mb-8 leading-[1]">Você não precisa viver Brasília sozinha.</h1>
+          <h1 className="text-6xl md:text-8xl font-serif mb-8 leading-[0.9]">Você não precisa viver Brasília sozinha.</h1>
           <p className="text-xl md:text-2xl mb-12 leading-relaxed font-light opacity-90 max-w-2xl mx-auto">
             Existem mulheres como você procurando novas amizades, novas experiências e um lugar onde possam simplesmente chegar como são.
           </p>
