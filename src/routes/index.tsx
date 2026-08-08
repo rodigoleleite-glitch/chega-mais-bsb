@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
 import { getExperiences } from "@/lib/experiences.functions";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -63,25 +63,25 @@ function LandingPage() {
     {
       name: "Ana Lu",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/9ef0f171-d6b0-4613-8994-e350020461d3.png",
       quote: "O Chega Mais nasceu porque ninguém deveria viver Brasília sozinha."
     },
     {
       name: "Brenda",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/a754b2d5-9175-4d7a-85d8-04ccf8158097.png",
       quote: "Acreditamos que a cidade se torna lar quando criamos laços verdadeiros."
     },
     {
       name: "Clara",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/410887df-520e-48a5-b385-d6ec8c772c67.png",
       quote: "Nossa missão é transformar encontros casuais em amizades profundas."
     },
     {
       name: "Hannah",
       role: "IDEALIZADORA",
-      image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80",
+      image: "https://gentle-greetings-helper.lovable.app/lovable-uploads/39d5e786-2ed5-48b4-9388-75c3ef27718e.png",
       quote: "Brasília tem espaços incríveis que ficam ainda melhores com boa companhia."
     }
   ];
@@ -100,7 +100,7 @@ function LandingPage() {
           className="absolute inset-0 z-0"
         >
           <img 
-            src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80" 
+            src="https://gentle-greetings-helper.lovable.app/lovable-uploads/62768560-6b65-4f76-857e-12826a7e58a2.png" 
             alt="Comunidade Chega Mais BSB" 
             className="w-full h-full object-cover"
           />
@@ -124,20 +124,18 @@ function LandingPage() {
               Onde Brasília deixa de ser apenas uma cidade e passa a ser a sua casa. Encontre sua turma e viva novas experiências.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-lg shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
+              <Link 
+                to="/experiencias"
+                className="px-10 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-lg shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all text-center"
               >
                 Conhecer Experiências
-              </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              </Link>
+              <button 
+                onClick={() => document.getElementById('historia')?.scrollIntoView({ behavior: 'smooth' })}
                 className="px-10 py-5 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/20 transition-all"
               >
                 Nossa Comunidade
-              </motion.button>
+              </button>
             </div>
           </motion.div>
         </div>
@@ -154,7 +152,7 @@ function LandingPage() {
       </section>
 
       {/* Você já sentiu isso? */}
-      <section className="py-32 px-8 bg-white overflow-hidden">
+      <section id="historia" className="py-32 px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <motion.div
             initial="hidden"
@@ -190,14 +188,14 @@ function LandingPage() {
           >
             <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl transform rotate-3">
               <img 
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80" 
+                src="https://gentle-greetings-helper.lovable.app/lovable-uploads/977799b6-7911-49b5-9f5b-1180b7c76899.png" 
                 alt="Conexão Chega Mais" 
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="absolute -bottom-10 -left-10 aspect-[4/5] w-64 rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white transform -rotate-6 hidden lg:block">
               <img 
-                src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80" 
+                src="https://gentle-greetings-helper.lovable.app/lovable-uploads/27671190-2646-444f-8389-9e8a096c4a30.png" 
                 alt="Momento Chega Mais" 
                 className="w-full h-full object-cover"
               />
@@ -241,13 +239,12 @@ function LandingPage() {
               <h2 className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight">Vem pra <br />próxima?</h2>
               <p className="text-xl text-[#5E5E5E] max-w-lg">Escolha uma experiência e comece a escrever sua nova história em Brasília.</p>
             </motion.div>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link 
+              to="/experiencias"
               className="hidden md:flex items-center gap-2 font-bold text-[#7A3FF2] group"
             >
               Ver todas <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-            </motion.button>
+            </Link>
           </div>
 
           <div className="grid md:grid-cols-3 gap-10">
@@ -271,12 +268,12 @@ function LandingPage() {
                   </div>
                   <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
                   <p className="text-[#5E5E5E] mb-10 h-12">{e.short_description}</p>
-                  <motion.button 
-                    whileHover={{ scale: 1.02 }}
-                    className="w-full py-4 bg-[#FAF9F8] text-[#1A1A1A] rounded-full font-bold text-sm hover:bg-[#7A3FF2] hover:text-white transition-all border border-black/5"
+                  <Link 
+                    to={`/experiencias/${e.slug}`}
+                    className="block w-full py-4 bg-[#FAF9F8] text-[#1A1A1A] rounded-full font-bold text-sm hover:bg-[#7A3FF2] hover:text-white transition-all border border-black/5 text-center"
                   >
                     Participar da Experiência
-                  </motion.button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -326,13 +323,12 @@ function LandingPage() {
             Chega mais. <br />
             <span className="italic font-light">Estamos te esperando.</span>
           </h2>
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-16 py-6 bg-[#7A3FF2] text-white rounded-full font-bold text-xl shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
+          <Link 
+            to="/experiencias"
+            className="inline-block px-16 py-6 bg-[#7A3FF2] text-white rounded-full font-bold text-xl shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
           >
             Fazer parte da comunidade
-          </motion.button>
+          </Link>
           
           <div className="mt-24 pt-12 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-2xl font-serif font-bold text-[#7A3FF2]">Chega Mais BSB</div>
