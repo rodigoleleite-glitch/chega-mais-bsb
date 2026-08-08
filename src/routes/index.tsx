@@ -6,11 +6,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { getActiveEvents, type SheetEvent as Event } from "@/services/eventsService";
 
 
-import logoAsset from "@/assets/logo_purple.jpg.asset.json";
-import communityAsset from "@/assets/community_group.jpg.asset.json";
-import workshopAsset from "@/assets/workshop_table.jpg.asset.json";
-import smilingAsset from "@/assets/group_smiling.jpg.asset.json";
-import portraitAsset from "@/assets/group_portrait.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,7 +52,7 @@ function Index() {
       {/* Hero */}
       <section className="relative h-screen w-full flex flex-col justify-center items-center px-4 overflow-hidden">
         <motion.div initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 2 }} className="absolute inset-0 z-0">
-          <img src={communityAsset.url} alt="Comunidade" className="w-full h-full object-cover" />
+          <img src="/imagens/community_group.jpg" alt="Comunidade" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/45 backdrop-blur-[4px]" />
         </motion.div>
         
@@ -106,7 +101,7 @@ function Index() {
           <p className="text-lg leading-relaxed text-[#5E5E5E] mb-8">O Chega Mais nasceu para ser um lugar onde mulheres possam chegar exatamente como são.</p>
         </motion.div>
         <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} className="relative">
-          <img src={portraitAsset.url} alt="Fundadoras" className="rounded-3xl shadow-2xl transition-all duration-700 hover:scale-[1.02]" />
+          <img src="/imagens/group_portrait.jpg" alt="Fundadoras" className="rounded-3xl shadow-2xl transition-all duration-700 hover:scale-[1.02]" />
         </motion.div>
       </section>
 
@@ -123,7 +118,7 @@ function Index() {
             ].map((f, i) => (
               <motion.div key={i} whileHover={{ y: -10 }} className="group">
                 <div className="h-80 rounded-2xl overflow-hidden mb-6 bg-[#FAF9F8]">
-                  <img src={portraitAsset.url} alt={f.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                  <img src="/imagens/group_portrait.jpg" alt={f.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                 </div>
                 <h3 className="text-xl font-serif font-bold">{f.name}</h3>
                 <p className="text-[#7A3FF2] text-sm font-bold uppercase mb-2">{f.role}</p>
@@ -140,9 +135,9 @@ function Index() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-serif font-semibold text-center mb-20 tracking-tight">Momentos Chega Mais</h2>
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            {[workshopAsset, smilingAsset, portraitAsset, communityAsset, workshopAsset, smilingAsset].map((asset, i) => (
+            {["workshop_table.jpg", "group_smiling.jpg", "group_portrait.jpg", "community_group.jpg", "workshop_table.jpg", "group_smiling.jpg"].map((imgName, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} whileHover={{ scale: 1.02 }} className="break-inside-avoid relative group rounded-2xl overflow-hidden shadow-lg">
-                <img src={asset.url} className="w-full h-auto transition-transform duration-700 group-hover:scale-110" />
+                <img src={`/imagens/${imgName}`} className="w-full h-auto transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <Camera className="text-white" size={32} />
                 </div>
@@ -265,7 +260,7 @@ function Index() {
       {/* Seção Emocional Impacto */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={communityAsset.url} className="w-full h-full object-cover" />
+          <img src="/imagens/community_group.jpg" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/60" />
         </div>
         <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative z-10 text-center text-white px-8 max-w-5xl">
@@ -290,7 +285,7 @@ function Index() {
 
       <footer className="py-20 bg-[#FAF9F8] text-center border-t border-black/5">
         <div className="flex items-center justify-center gap-2 mb-6">
-          <img src={logoAsset.url} className="w-10 h-10 rounded-full" />
+          <img src="/imagens/logo_purple.jpg" className="w-10 h-10 rounded-full" />
           <span className="font-serif text-xl font-bold">Chega Mais BSB</span>
         </div>
         <p className="text-[#5E5E5E] text-sm font-medium">© 2026 • Feito com amor em Brasília</p>

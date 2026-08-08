@@ -42,6 +42,12 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
               const formatImageUrl = (url: string) => {
                 if (!url) return "/placeholder.svg";
                 
+                // Prioriza caminho local se o valor na planilha for apenas um nome de arquivo
+                // (não começa com http, https ou /)
+                if (!url.startsWith('http') && !url.startsWith('/')) {
+                  return `/imagens/${url.trim()}`;
+                }
+
                 // Suporte para links do Google Drive
                 const driveMatch = url.match(/\/(?:d|file\/d)\/([a-zA-Z0-9_-]+)/);
                 if (driveMatch && driveMatch[1]) {
