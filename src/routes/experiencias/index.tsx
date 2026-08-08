@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
-import { experiences } from "@/data/experiences";
+import { getExperiences } from "@/lib/experiences.functions";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -15,11 +16,19 @@ export const Route = createFileRoute("/experiencias/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData({
+    queryKey: ['experiences'],
+    queryFn: () => getExperiences()
+  }),
   component: Experiencias,
 });
 
 
 function Experiencias() {
+  const { data: experiences } = useSuspenseQuery({
+    queryKey: ['experiences'],
+    queryFn: () => getExperiences()
+  });
   return (
     <div className="min-h-screen bg-[#FAF9F8] text-[#1A1A1A] font-sans">
       <Navbar />
@@ -46,16 +55,16 @@ function Experiencias() {
               className="bg-white rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all border border-black/5"
             >
               <div className="h-72 overflow-hidden relative">
-                <img src={e.imageUrl} alt={e.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src={e.image_url || "/placeholder.jpg"} alt={e.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 <div className="absolute top-6 left-6 px-4 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-bold uppercase text-[#7A3FF2] tracking-widest">{e.category}</div>
               </div>
               <div className="p-10">
                 <div className="flex gap-4 text-xs font-bold text-[#5E5E5E] mb-6 uppercase tracking-widest">
-                  <span className="flex items-center gap-1"><Calendar size={14} /> {e.displayDate}</span>
+                  <span className="flex items-center gap-1"><Calendar size={14} /> {e.display_date}</span>
                   <span className="flex items-center gap-1"><MapPin size={14} /> {e.location}</span>
                 </div>
                 <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
-                <p className="text-[#5E5E5E] mb-10 h-12">{e.shortDescription}</p>
+                <p className="text-[#5E5E5E] mb-10 h-12">{e.short_description}</p>
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-bold text-[#5E5E5E]">{e.vacancies}</span>
                   <Link 
