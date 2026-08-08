@@ -71,10 +71,10 @@ function ExperienciaIndividual() {
                 </div>
               ))}
             </div>
-            </div>
           </div>
         </div>
       </section>
+
 
       {/* Galeria */}
       <section className="py-20 px-8 bg-white">
