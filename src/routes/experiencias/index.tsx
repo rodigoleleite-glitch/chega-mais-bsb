@@ -6,6 +6,10 @@ import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/experiencias/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData({
+    queryKey: ['experiences'],
+    queryFn: () => getExperiences()
+  }),
   head: () => ({
     meta: [
       { title: "Próximas Experiências | Chega Mais BSB" },
@@ -16,10 +20,6 @@ export const Route = createFileRoute("/experiencias/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData({
-    queryKey: ['experiences'],
-    queryFn: () => getExperiences()
-  }),
   component: Experiencias,
 });
 
@@ -29,6 +29,7 @@ function Experiencias() {
     queryKey: ['experiences'],
     queryFn: () => getExperiences()
   });
+
   return (
     <div className="min-h-screen bg-[#FAF9F8] text-[#1A1A1A] font-sans">
       <Navbar />
@@ -44,7 +45,7 @@ function Experiencias() {
       {/* Grid */}
       <section className="pb-32 px-8">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
-          {experiences.map((e, i) => (
+          {(experiences || []).map((e: any, i: number) => (
             <motion.div 
               key={e.id} 
               initial={{ opacity: 0, y: 30 }} 
