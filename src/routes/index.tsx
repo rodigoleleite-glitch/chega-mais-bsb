@@ -34,7 +34,7 @@ function Index() {
           {["Sobre", "Experiências", "Comunidade"].map((item) => (
             <a key={item} href="#" className="hover:opacity-60 transition-opacity">{item}</a>
           ))}
-          <button className={`px-6 py-2 rounded-full transition-all ${isScrolled ? "bg-[#4A3D66] text-white" : "bg-white text-[#2D2926]"}`}>
+          <button className={`px-6 py-2 rounded-full font-bold transition-all ${isScrolled ? "bg-[#4A3D66] text-white" : "bg-white text-[#2D2926]"}`}>
             Ver experiências
           </button>
         </div>
@@ -55,8 +55,8 @@ function Index() {
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-widest mb-6">
             <Sparkles size={14} /> Comunidade feminina em Brasília
           </div>
-          <h1 className="text-5xl md:text-8xl font-serif mb-8 leading-[0.9] tracking-tight">Você não precisa viver Brasília sozinha.</h1>
-          <p className="text-xl md:text-2xl mb-12 leading-relaxed font-light opacity-90 max-w-2xl mx-auto">
+          <h1 className="text-5xl md:text-8xl font-serif font-bold mb-8 leading-[0.9] tracking-tight">Você não precisa viver Brasília sozinha.</h1>
+          <p className="text-xl md:text-2xl mb-12 leading-relaxed font-semibold opacity-90 max-w-2xl mx-auto">
             Existem mulheres como você procurando novas amizades, novas experiências e um lugar onde possam simplesmente chegar como são.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
@@ -248,7 +248,7 @@ function Index() {
 
       {/* CTA Faixa de Impacto */}
       <section className="py-24 bg-[#4A3D66] text-white text-center px-8">
-          <h2 className="text-4xl md:text-6xl font-serif mb-6 leading-tight">Não é sobre o evento.<br/>É sobre o que acontece depois dele.</h2>
+          <h2 className="text-4xl md:text-6xl font-serif font-bold italic mb-6 leading-tight">Não é sobre o evento.<br/>É sobre o que acontece depois dele.</h2>
           <p className="text-xl font-light opacity-80 italic max-w-xl mx-auto">As melhores amizades geralmente começam quando alguém decide aceitar um convite.</p>
       </section>
 
