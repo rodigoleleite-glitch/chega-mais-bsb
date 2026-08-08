@@ -60,8 +60,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-serif: "Cormorant Garamond", "Playfair Display", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-serif: "Recoleta", "Cormorant Garamond", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
 }
 
 :root {
