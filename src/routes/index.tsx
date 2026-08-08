@@ -301,23 +301,33 @@ function Index() {
           
           <div className="relative">
             <div className="absolute top-1/2 left-0 w-full h-px bg-black/10 -translate-y-1/2 hidden lg:block" />
-            <div className="grid lg:grid-cols-4 gap-12 lg:gap-8">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid lg:grid-cols-4 gap-12 lg:gap-8"
+            >
               {[
                 { step: "01", title: "Escolha uma experiência", desc: "Navegue pelo nosso calendário e escolha a que mais combina com você.", icon: Coffee },
                 { step: "02", title: "Garanta seu lugar", desc: "As vagas são limitadas para garantir que todas se sintam acolhidas.", icon: Star },
                 { step: "03", title: "Chegue como você é", desc: "Não precisa conhecer ninguém. Venha aberta para o novo.", icon: Heart },
                 { step: "04", title: "Viva a conexão", desc: "Desfrute do momento e das novas amizades que surgirão.", icon: Sparkles }
               ].map((item, i) => (
-                <div key={i} className="relative z-10 flex flex-col items-center text-center group">
-                  <div className="w-16 h-16 bg-white border-2 border-[#4A3D66] text-[#4A3D66] rounded-full flex items-center justify-center text-xl font-serif mb-8 group-hover:bg-[#4A3D66] group-hover:text-white transition-all duration-500">
+                <motion.div key={i} variants={itemVariants} className="relative z-10 flex flex-col items-center text-center group">
+                  <motion.div 
+                    whileHover={{ scale: 1.2, rotate: 360 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                    className="w-16 h-16 bg-white border-2 border-[#4A3D66] text-[#4A3D66] rounded-full flex items-center justify-center text-xl font-serif mb-8 group-hover:bg-[#4A3D66] group-hover:text-white transition-all duration-500 shadow-md"
+                  >
                     <item.icon size={24} />
-                  </div>
+                  </motion.div>
                   <span className="text-xs font-bold tracking-widest text-[#4A3D66] mb-4 uppercase">{item.step}</span>
-                  <h3 className="text-xl font-serif mb-4">{item.title}</h3>
+                  <h3 className="text-xl font-serif mb-4 group-hover:text-[#4A3D66] transition-colors">{item.title}</h3>
                   <p className="text-[#666] leading-relaxed max-w-xs">{item.desc}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
