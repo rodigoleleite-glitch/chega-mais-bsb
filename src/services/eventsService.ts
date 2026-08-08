@@ -37,20 +37,31 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
           skipEmptyLines: true,
           complete: (results) => {
             const data = results.data.map((row: any) => {
-              // Função para transformar links do Google Drive em links diretos de imagem
-              const formatDriveUrl = (url: string) => {
-                if (!url) return "";
-                const driveMatch = url.match(/\/(?:d|file\/d)\/([a-zA-Z0-9_-]+)/);
-                if (driveMatch && driveMatch[1]) {
-                  return `https://lh3.googleusercontent.com/u/0/d/${driveMatch[1]}`;
+              // Função para tratar o caminho da imagem
+              const formatImageUrl = (imagePath: string) => {
+                if (!imagePath) return "/placeholder.svg"; // Fallback caso esteja vazio
+                
+                // Se o usuário digitou apenas o nome do arquivo (ex: "clara.jpg")
+                // ou se já começou com "/", garantimos que aponte para /imagens/
+                const fileName = imagePath.trim();
+                
+                // Se já for uma URL completa (http), mantemos (opcional, para flexibilidade)
+                if (fileName.startsWith('http')) return fileName;
+                
+                // Remove "/" inicial se houver para padronizar
+                const cleanFileName = fileName.startsWith('/') ? fileName.substring(1) : fileName;
+                
+                // Se o nome do arquivo já contém "imagens/", não duplicamos
+                if (cleanFileName.startsWith('imagens/')) {
+                  return `/${cleanFileName}`;
                 }
-                return url;
+                
+                return `/imagens/${cleanFileName}`;
               };
 
               // Função para limpar links curtos do Forms que podem dar erro
               const formatFormUrl = (url: string) => {
                 if (!url) return "";
-                // Remove espaços em branco que podem vir da planilha
                 return url.trim();
               };
 
@@ -65,7 +76,7 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
                 location: row.location || "",
                 mapsUrl: row.mapsUrl || "",
                 formUrl: formatFormUrl(row.formUrl),
-                image: formatDriveUrl(row.image),
+                image: formatImageUrl(row.image),
                 shortDescription: row.shortDescription || "",
                 description: row.description || "",
                 spots: row.spots || "",
