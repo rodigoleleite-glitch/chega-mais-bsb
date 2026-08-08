@@ -35,20 +35,25 @@ export const createExperience = createServerFn({ method: "POST" })
     display_date: z.string(),
     time: z.string(),
     location: z.string(),
-    google_maps_url: z.string().nullable().optional(),
+    google_maps_url: z.string().optional().nullable(),
     short_description: z.string(),
     long_description: z.string(),
     price: z.string(),
     vacancies: z.string(),
     status: z.enum(['available', 'sold-out']),
-    image_url: z.string().nullable().optional(),
+    image_url: z.string().optional().nullable(),
     includes: z.array(z.string()),
     for_who: z.array(z.string()),
   }).parse(data))
   .handler(async ({ data }) => {
+    // ExactOptionalPropertyTypes fix: map undefined to null or omit
+    const payload: any = { ...data };
+    if (payload.google_maps_url === undefined) payload.google_maps_url = null;
+    if (payload.image_url === undefined) payload.image_url = null;
+
     const { data: result, error } = await supabase
       .from('experiences')
-      .insert(data)
+      .insert(payload)
       .select()
       .single();
     
