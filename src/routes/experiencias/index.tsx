@@ -4,7 +4,7 @@ import { experiences } from "@/data/experiences";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-export const Route = createFileRoute("/experiencias")({
+export const Route = createFileRoute("/experiencias/")({
   component: Experiencias,
 });
 
