@@ -5,8 +5,19 @@ import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/experiencias/")({
+  head: () => ({
+    meta: [
+      { title: "Próximas Experiências | Chega Mais BSB" },
+      { name: "description", content: "Confira as próximas experiências da comunidade Chega Mais em Brasília. Conheça pessoas novas e viva momentos únicos." },
+      { property: "og:title", content: "Próximas Experiências | Chega Mais BSB" },
+      { property: "og:description", content: "Confira as próximas experiências da comunidade Chega Mais em Brasília. Conheça pessoas novas e viva momentos únicos." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Experiencias,
 });
+
 
 function Experiencias() {
   return (
