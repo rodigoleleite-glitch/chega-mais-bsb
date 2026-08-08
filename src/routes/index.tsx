@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
 import { getExperiences } from "@/lib/experiences.functions";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -124,20 +124,18 @@ function LandingPage() {
               Onde Brasília deixa de ser apenas uma cidade e passa a ser a sua casa. Encontre sua turma e viva novas experiências.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-lg shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
+              <Link 
+                to="/experiencias"
+                className="px-10 py-5 bg-[#7A3FF2] text-white rounded-full font-bold text-lg shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all text-center"
               >
                 Conhecer Experiências
-              </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              </Link>
+              <button 
+                onClick={() => document.getElementById('historia')?.scrollIntoView({ behavior: 'smooth' })}
                 className="px-10 py-5 bg-white/10 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-lg hover:bg-white/20 transition-all"
               >
                 Nossa Comunidade
-              </motion.button>
+              </button>
             </div>
           </motion.div>
         </div>
@@ -154,7 +152,7 @@ function LandingPage() {
       </section>
 
       {/* Você já sentiu isso? */}
-      <section className="py-32 px-8 bg-white overflow-hidden">
+      <section id="historia" className="py-32 px-8 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <motion.div
             initial="hidden"
@@ -241,13 +239,12 @@ function LandingPage() {
               <h2 className="text-5xl md:text-7xl font-serif font-bold mb-6 tracking-tight">Vem pra <br />próxima?</h2>
               <p className="text-xl text-[#5E5E5E] max-w-lg">Escolha uma experiência e comece a escrever sua nova história em Brasília.</p>
             </motion.div>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link 
+              to="/experiencias"
               className="hidden md:flex items-center gap-2 font-bold text-[#7A3FF2] group"
             >
               Ver todas <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-            </motion.button>
+            </Link>
           </div>
 
           <div className="grid md:grid-cols-3 gap-10">
@@ -271,12 +268,12 @@ function LandingPage() {
                   </div>
                   <h3 className="text-3xl font-serif font-bold mb-4">{e.title}</h3>
                   <p className="text-[#5E5E5E] mb-10 h-12">{e.short_description}</p>
-                  <motion.button 
-                    whileHover={{ scale: 1.02 }}
-                    className="w-full py-4 bg-[#FAF9F8] text-[#1A1A1A] rounded-full font-bold text-sm hover:bg-[#7A3FF2] hover:text-white transition-all border border-black/5"
+                  <Link 
+                    to={`/experiencias/${e.slug}`}
+                    className="block w-full py-4 bg-[#FAF9F8] text-[#1A1A1A] rounded-full font-bold text-sm hover:bg-[#7A3FF2] hover:text-white transition-all border border-black/5 text-center"
                   >
                     Participar da Experiência
-                  </motion.button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -326,13 +323,12 @@ function LandingPage() {
             Chega mais. <br />
             <span className="italic font-light">Estamos te esperando.</span>
           </h2>
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-16 py-6 bg-[#7A3FF2] text-white rounded-full font-bold text-xl shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
+          <Link 
+            to="/experiencias"
+            className="inline-block px-16 py-6 bg-[#7A3FF2] text-white rounded-full font-bold text-xl shadow-2xl shadow-[#7A3FF2]/20 hover:bg-[#5E2CCF] transition-all"
           >
             Fazer parte da comunidade
-          </motion.button>
+          </Link>
           
           <div className="mt-24 pt-12 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-2xl font-serif font-bold text-[#7A3FF2]">Chega Mais BSB</div>
