@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Sparkles, Heart, Users, Calendar, ArrowRight } from "lucide-react";
+import { Sparkles, Heart, Users, Calendar, ArrowRight, Star, Quote, MapPin, Coffee, Camera, Music } from "lucide-react";
 
 import logoAsset from "@/assets/logo_purple.jpg.asset.json";
 import communityAsset from "@/assets/community_group.jpg.asset.json";
