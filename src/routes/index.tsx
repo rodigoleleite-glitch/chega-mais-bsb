@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Sparkles, Heart, Users, Calendar } from "lucide-react";
+import { Sparkles, Heart, Users, Calendar, ArrowRight } from "lucide-react";
 
 import logoAsset from "@/assets/logo_purple.jpg.asset.json";
 import communityAsset from "@/assets/community_group.jpg.asset.json";
@@ -77,11 +77,7 @@ function Index() {
               { title: "Fazer algo diferente sem precisar ir sozinha.", icon: Heart },
               { title: "Um lugar para ser você.", icon: Sparkles }
             ].map((item, i) => (
-              <motion.div 
-                key={i} 
-                whileHover={{ y: -5 }}
-                className="p-8 bg-white border border-black/5 rounded-2xl shadow-sm group transition-all"
-              >
+              <motion.div key={i} whileHover={{ y: -5 }} className="p-8 bg-white border border-black/5 rounded-2xl shadow-sm group transition-all">
                 <div className="w-12 h-12 bg-[#FAF8F6] rounded-full mb-6 flex items-center justify-center group-hover:bg-[#4A3D66] group-hover:text-white transition-colors duration-500">
                   <item.icon size={20} />
                 </div>
@@ -89,6 +85,29 @@ function Index() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Nossa História */}
+      <section className="py-24 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+        <div>
+          <h2 className="text-4xl font-serif mb-8">Por trás do Chega Mais existem mulheres.</h2>
+          <p className="text-lg leading-relaxed text-[#666] mb-6">Somos quatro mulheres diferentes, com personalidades, sonhos e rotinas únicas. Mas acreditamos na mesma coisa: ninguém deveria precisar viver tudo sozinha.</p>
+          <p className="text-lg leading-relaxed text-[#666] mb-8">O Chega Mais nasceu para ser um lugar onde mulheres possam chegar exatamente como são.</p>
+        </div>
+        <img src={portraitAsset.url} alt="Fundadoras" className="rounded-3xl shadow-xl" />
+      </section>
+
+      {/* Momentos (Galeria) */}
+      <section className="py-24 px-8 bg-white">
+        <div className="max-w-7xl mx-auto text-center mb-16">
+          <h2 className="text-4xl font-serif mb-6">Momentos Chega Mais</h2>
+          <p className="text-[#666]">Um pouco do que acontece em nossa comunidade.</p>
+        </div>
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6">
+          <img src={workshopAsset.url} className="rounded-2xl w-full h-64 object-cover" />
+          <img src={smilingAsset.url} className="rounded-2xl w-full h-64 object-cover" />
+          <img src={portraitAsset.url} className="rounded-2xl w-full h-64 object-cover" />
         </div>
       </section>
 
