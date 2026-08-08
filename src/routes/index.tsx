@@ -73,26 +73,50 @@ function Index() {
 
       {/* Hero */}
       <section className="relative h-screen w-full flex flex-col justify-center items-center px-4 overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <motion.div 
+          initial={{ scale: 1.2 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="absolute inset-0 z-0"
+        >
           <img src={communityAsset.url} alt="Comunidade" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
-        </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.6 }}
+            transition={{ duration: 1.5 }}
+            className="absolute inset-0 bg-black backdrop-blur-[2px]" 
+          />
+        </motion.div>
         
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
           className="relative z-10 text-center max-w-4xl text-white px-4"
         >
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-widest mb-6">
-            <Sparkles size={14} /> Comunidade feminina em Brasília
-          </div>
-          <h1 className="text-5xl md:text-8xl font-serif font-bold mb-8 leading-[0.9] tracking-tight">Você não precisa viver Brasília sozinha.</h1>
-          <p className="text-xl md:text-2xl mb-12 leading-relaxed font-semibold opacity-90 max-w-2xl mx-auto">
+          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-widest mb-6">
+            <Sparkles size={14} className="animate-pulse" /> Comunidade feminina em Brasília
+          </motion.div>
+          <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-serif font-bold mb-8 leading-[0.9] tracking-tight">Você não precisa viver Brasília sozinha.</motion.h1>
+          <motion.p variants={itemVariants} className="text-xl md:text-2xl mb-12 leading-relaxed font-semibold opacity-90 max-w-2xl mx-auto">
             Existem mulheres como você procurando novas amizades, novas experiências e um lugar onde possam simplesmente chegar como são.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-[#4A3D66] text-white rounded-full font-bold text-lg hover:bg-[#3d3356] transition-all">Conheça as próximas experiências</button>
+          </motion.p>
+          <motion.div variants={itemVariants} className="flex flex-col md:flex-row gap-4 justify-center">
+            <button className="px-8 py-3 bg-[#4A3D66] text-white rounded-full font-bold text-lg hover:scale-105 transition-all shadow-lg hover:shadow-[#4A3D66]/40 flex items-center justify-center gap-2">
+              Conheça as próximas experiências <ChevronRight size={20} />
+            </button>
             <button className="px-8 py-3 border border-white/40 text-white rounded-full font-bold text-lg hover:bg-white/10 transition-all">Nossa história</button>
+          </motion.div>
+        </motion.div>
+        
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce"
+        >
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
           </div>
         </motion.div>
       </section>
