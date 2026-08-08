@@ -1,29 +1,22 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Navbar } from "@/components/layout/Navbar";
-import { getExperienceBySlug } from "@/lib/experiences.functions";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { experiences } from "@/data/experiences";
 import { Calendar, MapPin, Check, Camera, ArrowRight, Sparkles, HelpCircle, ChevronDown } from "lucide-react";
 
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/experiencias/$slug")({
-  loader: async ({ params, context }) => {
-    return context.queryClient.ensureQueryData({
-      queryKey: ['experience', params.slug],
-      queryFn: () => getExperienceBySlug({ data: params.slug })
-    });
-  },
-  head: ({ loaderData }) => {
-    const event = loaderData;
+  head: ({ params }) => {
+    const event = experiences.find((e) => e.slug === params.slug);
     return {
       meta: [
         { title: `${event?.title || 'Experiência'} | Chega Mais BSB` },
-        { name: "description", content: event?.short_description || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
+        { name: "description", content: event?.shortDescription || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
         { property: "og:title", content: `${event?.title || 'Experiência'} | Chega Mais BSB` },
-        { property: "og:description", content: event?.short_description || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
+        { property: "og:description", content: event?.shortDescription || "Conheça os detalhes desta experiência única da comunidade Chega Mais BSB." },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
-        ...(event?.image_url ? [{ property: "og:image", content: event.image_url }, { name: "twitter:image", content: event.image_url }] : []),
+        ...(event?.imageUrl ? [{ property: "og:image", content: event.imageUrl }, { name: "twitter:image", content: event.imageUrl }] : []),
       ],
     };
   },
@@ -33,10 +26,7 @@ export const Route = createFileRoute("/experiencias/$slug")({
 
 function ExperienciaIndividual() {
   const { slug } = useParams({ from: "/experiencias/$slug" });
-  const { data: event } = useSuspenseQuery({
-    queryKey: ['experience', slug],
-    queryFn: () => getExperienceBySlug({ data: slug })
-  });
+  const event = experiences.find((e) => e.slug === slug);
 
   if (!event) return <div>Evento não encontrado.</div>;
 
@@ -70,7 +60,7 @@ function ExperienciaIndividual() {
       <section className="pt-32 pb-20 px-8">
         <div className="max-w-5xl mx-auto">
           <div className="relative h-[50vh] rounded-[3rem] overflow-hidden mb-12 shadow-2xl">
-            <img src={event.image_url || "/placeholder.jpg"} alt={event.title} className="w-full h-full object-cover" />
+            <img src={event.imageUrl} alt={event.title} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black/20" />
           </div>
           
@@ -78,10 +68,10 @@ function ExperienciaIndividual() {
             <div>
               <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4 tracking-tight">{event.title}</h1>
               <div className="flex flex-wrap gap-6 text-[#5E5E5E] font-bold uppercase tracking-widest text-sm">
-                <span className="flex items-center gap-2"><Calendar size={18} className="text-[#7A3FF2]" /> {event.display_date}, {event.time}</span>
-                {event.google_maps_url ? (
+                <span className="flex items-center gap-2"><Calendar size={18} className="text-[#7A3FF2]" /> {event.displayDate}, {event.time}</span>
+                {event.googleMapsUrl ? (
                   <a 
-                    href={event.google_maps_url} 
+                    href={event.googleMapsUrl} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="flex items-center gap-2 hover:text-[#7A3FF2] transition-colors"
@@ -108,12 +98,12 @@ function ExperienciaIndividual() {
 
           <div className="prose prose-lg max-w-none text-[#5E5E5E]">
             <h2 className="text-3xl font-serif text-[#1A1A1A] mb-6">Sobre a experiência</h2>
-            <p className="leading-relaxed text-xl text-[#1A1A1A] mb-12">{event.long_description}</p>
+            <p className="leading-relaxed text-xl text-[#1A1A1A] mb-12">{event.longDescription}</p>
             
             <div className="bg-white p-12 rounded-[2.5rem] border border-black/5 mb-20">
               <h3 className="text-2xl font-serif font-bold mb-8">O que está incluso</h3>
               <div className="grid md:grid-cols-2 gap-6">
-                {(event.includes || []).map((inc: string, i: number) => (
+                {event.includes.map((inc, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <Check className="text-[#7A3FF2]" /> <span className="font-semibold text-[#1A1A1A]">{inc}</span>
                   </div>
@@ -123,7 +113,7 @@ function ExperienciaIndividual() {
 
             <h3 className="text-2xl font-serif font-bold mb-10">Para quem é</h3>
             <div className="grid md:grid-cols-3 gap-6">
-              {(event.for_who || []).map((who: string, i: number) => (
+              {event.forWho.map((who, i) => (
                 <div key={i} className="bg-[#FAF9F8] p-8 rounded-2xl border border-black/5 font-semibold text-[#1A1A1A]">
                   <Check className="text-[#7A3FF2] mb-4" /> {who}
                 </div>
@@ -139,9 +129,9 @@ function ExperienciaIndividual() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-serif font-bold mb-12 text-center tracking-tight">Galeria de Experiências</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[].map((e: any, i: number) => (
+            {experiences.slice(0, 4).map((e, i) => (
               <div key={i} className="aspect-square rounded-2xl overflow-hidden group">
-                <img src={e.image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <img src={e.imageUrl} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
               </div>
             ))}
           </div>
