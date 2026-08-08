@@ -14,12 +14,12 @@ export const getExperiences = createServerFn({ method: "GET" })
   });
 
 export const getExperienceBySlug = createServerFn({ method: "GET" })
-  .inputValidator((slug: string) => z.string().parse(slug))
-  .handler(async ({ data: slug }) => {
+  .inputValidator((data: any) => z.object({ data: z.string() }).parse(data))
+  .handler(async ({ data: input }) => {
     const { data, error } = await supabase
       .from('experiences')
       .select('*')
-      .eq('slug', slug)
+      .eq('slug', input.data)
       .single();
     
     if (error) throw error;
@@ -28,26 +28,27 @@ export const getExperienceBySlug = createServerFn({ method: "GET" })
 
 export const createExperience = createServerFn({ method: "POST" })
   .inputValidator((data: any) => z.object({
-    slug: z.string(),
-    title: z.string(),
-    category: z.string(),
-    date: z.string(),
-    display_date: z.string(),
-    time: z.string(),
-    location: z.string(),
-    google_maps_url: z.string().optional().nullable(),
-    short_description: z.string(),
-    long_description: z.string(),
-    price: z.string(),
-    vacancies: z.string(),
-    status: z.enum(['available', 'sold-out']),
-    image_url: z.string().optional().nullable(),
-    includes: z.array(z.string()),
-    for_who: z.array(z.string()),
+    data: z.object({
+      slug: z.string(),
+      title: z.string(),
+      category: z.string(),
+      date: z.string(),
+      display_date: z.string(),
+      time: z.string(),
+      location: z.string(),
+      google_maps_url: z.string().optional().nullable(),
+      short_description: z.string(),
+      long_description: z.string(),
+      price: z.string(),
+      vacancies: z.string(),
+      status: z.enum(['available', 'sold-out']),
+      image_url: z.string().optional().nullable(),
+      includes: z.array(z.string()),
+      for_who: z.array(z.string()),
+    })
   }).parse(data))
-  .handler(async ({ data }) => {
-    // ExactOptionalPropertyTypes fix: map undefined to null or omit
-    const payload: any = { ...data };
+  .handler(async ({ data: input }) => {
+    const payload: any = { ...input.data };
     if (payload.google_maps_url === undefined) payload.google_maps_url = null;
     if (payload.image_url === undefined) payload.image_url = null;
 
@@ -63,14 +64,16 @@ export const createExperience = createServerFn({ method: "POST" })
 
 export const updateExperience = createServerFn({ method: "POST" })
   .inputValidator((data: any) => z.object({
-    id: z.string(),
-    updates: z.any()
+    data: z.object({
+      id: z.string(),
+      updates: z.any()
+    })
   }).parse(data))
-  .handler(async ({ data }) => {
+  .handler(async ({ data: input }) => {
     const { data: result, error } = await supabase
       .from('experiences')
-      .update(data.updates)
-      .eq('id', data.id)
+      .update(input.data.updates)
+      .eq('id', input.data.id)
       .select()
       .single();
     
@@ -79,12 +82,12 @@ export const updateExperience = createServerFn({ method: "POST" })
   });
 
 export const deleteExperience = createServerFn({ method: "POST" })
-  .inputValidator((id: string) => z.string().parse(id))
-  .handler(async ({ data: id }) => {
+  .inputValidator((data: any) => z.object({ data: z.string() }).parse(data))
+  .handler(async ({ data: input }) => {
     const { error } = await supabase
       .from('experiences')
       .delete()
-      .eq('id', id);
+      .eq('id', input.data);
     
     if (error) throw error;
     return { success: true };
