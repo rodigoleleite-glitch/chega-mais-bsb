@@ -95,3 +95,40 @@ function Index() {
           ))}
         </div>
       </section>
+
+      {/* Próximas Experiências */}
+      <section className="py-32 px-8 max-w-7xl mx-auto">
+        <h2 className="text-4xl font-serif mb-16 text-center">Próximas Experiências</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-[#E0D7ED] rounded-2xl mb-6 overflow-hidden" />
+              <p className="text-sm text-[#4A3D66] mb-2 font-medium">Categoria</p>
+              <h3 className="text-2xl font-serif mb-2">Título da Experiência {i}</h3>
+              <p className="text-[#666] mb-4">Breve descrição atraente sobre o evento.</p>
+              <button className="text-sm font-medium border-b border-[#2D2926]">Ver experiência</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA Final */}
+      <section className="py-32 bg-[#2D2926] text-white text-center px-8">
+        <h2 className="text-5xl font-serif mb-8">O próximo sorriso dessa comunidade pode ser o seu.</h2>
+        <button className="px-10 py-4 bg-white text-[#2D2926] rounded-full hover:bg-white/90 transition-all font-medium">
+          Conheça as próximas experiências
+        </button>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-8 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-[#666] text-sm gap-8">
+        <p>© 2026 Chega Mais BSB.</p>
+        <div className="flex gap-8">
+          <a href="#">Instagram</a>
+          <a href="#">WhatsApp</a>
+          <a href="#">Email</a>
+        </div>
+      </footer>
+    </div>
+  );
+}
