@@ -428,23 +428,50 @@ function Index() {
         </motion.div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-32 px-8 bg-white text-center">
-        <div className="max-w-3xl mx-auto">
-          <div className="w-20 h-20 bg-[#FAF8F6] rounded-full flex items-center justify-center mx-auto mb-10">
-            <Sparkles className="text-[#4A3D66]" size={32} />
-          </div>
-          <h2 className="text-4xl md:text-6xl font-serif font-semibold mb-8 leading-tight">O próximo sorriso dessa comunidade pode ser o seu.</h2>
-          <p className="text-xl text-[#666] mb-12 leading-relaxed">Não deixe para depois a conexão que você pode viver hoje. Estamos ansiosas para te conhecer.</p>
+      <section className="py-40 px-8 bg-white text-center relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto relative z-10"
+        >
+          <motion.div 
+            whileHover={{ rotate: 360, scale: 1.1 }}
+            transition={{ duration: 1 }}
+            className="w-24 h-24 bg-[#FAF8F6] rounded-full flex items-center justify-center mx-auto mb-10 shadow-inner"
+          >
+            <Sparkles className="text-[#4A3D66]" size={40} />
+          </motion.div>
+          <h2 className="text-4xl md:text-7xl font-serif font-semibold mb-8 leading-tight tracking-tight">O próximo sorriso dessa comunidade pode ser o seu.</h2>
+          <p className="text-xl text-[#666] mb-12 leading-relaxed font-medium">Não deixe para depois a conexão que você pode viver hoje. Estamos ansiosas para te conhecer.</p>
           <div className="flex flex-col md:flex-row gap-6 justify-center">
-            <button className="px-10 py-5 bg-[#4A3D66] text-white rounded-full font-bold text-lg shadow-xl shadow-[#4A3D66]/20 hover:scale-105 transition-all">
-              Participar agora
-            </button>
-            <button className="px-10 py-5 border-2 border-[#4A3D66]/10 text-[#4A3D66] rounded-full font-bold text-lg hover:bg-[#4A3D66]/5 transition-all">
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-6 bg-[#4A3D66] text-white rounded-full font-bold text-xl shadow-2xl shadow-[#4A3D66]/30 transition-all flex items-center justify-center gap-3"
+            >
+              Participar agora <ArrowRight size={24} />
+            </motion.button>
+            <motion.button 
+              whileHover={{ backgroundColor: "rgba(74, 61, 102, 0.05)" }}
+              className="px-12 py-6 border-2 border-[#4A3D66]/10 text-[#4A3D66] rounded-full font-bold text-xl transition-all"
+            >
               Falar conosco
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
+        
+        {/* Background Decorative Elements */}
+        <motion.div 
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 5, repeat: Infinity }}
+          className="absolute top-20 left-[10%] w-64 h-64 bg-[#4A3D66]/5 rounded-full blur-3xl -z-10"
+        />
+        <motion.div 
+          animate={{ y: [0, 20, 0] }}
+          transition={{ duration: 7, repeat: Infinity }}
+          className="absolute bottom-20 right-[10%] w-80 h-80 bg-[#4A3D66]/5 rounded-full blur-3xl -z-10"
+        />
       </section>
 
       {/* Footer */}
