@@ -231,7 +231,7 @@ function Index() {
           </div>
           <div className="grid md:grid-cols-3 gap-10">
             {activeEvents.map((e, i) => (
-              <motion.div key={e.id} whileHover={{ y: -10 }} className="bg-[#FAF9F8] rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all">
+              <motion.div key={e.slug} whileHover={{ y: -10 }} className="bg-[#FAF9F8] rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all">
                 <div className="h-72 overflow-hidden relative">
                   <img src={e.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute top-6 left-6 flex gap-2">

@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/experiencias/$slug")({
   head: () => ({
-    title: 'Experiência | Chega Mais BSB',
+    meta: [{ title: 'Experiência | Chega Mais BSB' }],
   }),
   component: ExperienciaIndividual,
 });
