@@ -240,7 +240,13 @@ function Index() {
             <h2 className="text-4xl md:text-5xl font-serif font-semibold">O que elas dizem</h2>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-3 gap-8"
+          >
             {[
               { name: "Mariana", text: "O Chega Mais mudou minha percepção de Brasília. Encontrei mulheres incríveis que hoje são minhas melhores amigas." },
               { name: "Beatriz", text: "Eu tinha medo de ir sozinha, mas fui acolhida desde o primeiro minuto. É um ambiente realmente seguro e leve." },
@@ -248,26 +254,43 @@ function Index() {
             ].map((testimonial, i) => (
               <motion.div 
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white p-10 rounded-3xl shadow-sm border border-black/5 relative"
+                variants={itemVariants}
+                whileHover={{ y: -10, rotateZ: i % 2 === 0 ? -1 : 1 }}
+                className="bg-white p-10 rounded-3xl shadow-sm border border-black/5 relative group hover:shadow-2xl transition-all duration-500"
               >
-                <Quote className="absolute top-8 right-8 text-[#4A3D66]/10" size={40} />
+                <motion.div
+                  initial={{ rotate: 0 }}
+                  whileHover={{ rotate: 15 }}
+                  className="absolute top-8 right-8 text-[#4A3D66]/10"
+                >
+                  <Quote size={40} />
+                </motion.div>
                 <div className="flex gap-1 mb-6 text-[#4A3D66]">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
+                  {[...Array(5)].map((_, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.5 + (idx * 0.1) }}
+                    >
+                      <Star size={16} fill="currentColor" />
+                    </motion.div>
+                  ))}
                 </div>
                 <p className="text-lg leading-relaxed text-[#4A3D66] mb-8 italic">"{testimonial.text}"</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-[#4A3D66]/10 rounded-full flex items-center justify-center font-serif text-[#4A3D66]">
+                  <motion.div 
+                    whileHover={{ scale: 1.1, rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-12 h-12 bg-[#4A3D66] text-white rounded-full flex items-center justify-center font-serif text-xl shadow-lg"
+                  >
                     {testimonial.name[0]}
-                  </div>
-                  <span className="font-medium text-[#2D2926]">{testimonial.name}</span>
+                  </motion.div>
+                  <span className="font-bold text-[#2D2926] tracking-tight">{testimonial.name}</span>
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
