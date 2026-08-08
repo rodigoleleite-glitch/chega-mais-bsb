@@ -49,6 +49,7 @@ export const createExperience = createServerFn({ method: "POST" })
   }).parse(data))
   .handler(async ({ data: input }) => {
     const payload: any = { ...input.data };
+    // ExactOptionalPropertyTypes fix: map undefined to null
     if (payload.google_maps_url === undefined) payload.google_maps_url = null;
     if (payload.image_url === undefined) payload.image_url = null;
 
