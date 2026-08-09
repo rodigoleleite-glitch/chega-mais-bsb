@@ -10,19 +10,34 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
     if (error != null && typeof error === "object" && "statusCode" in error) {
       throw error;
     }
-    // Log detailed error for Vercel/production monitoring
-    console.error("APPLICATION CRITICAL ERROR:", error instanceof Error ? {
+    
+    const errorDetails = error instanceof Error ? {
       message: error.message,
       stack: error.stack,
       name: error.name
-    } : error);
+    } : error;
+
+    console.error("APPLICATION CRITICAL ERROR:", errorDetails);
     
-    // In dev, we want to see the error
     if (import.meta.env.DEV) {
       throw error;
     }
 
-    return new Response(renderErrorPage(), {
+    // Retorna uma página minimalista com o erro para debug visual no Vercel
+    const debugHtml = `
+      <!DOCTYPE html>
+      <html>
+        <head><title>Debug Error</title></head>
+        <body style="font-family:sans-serif;padding:2rem;line-height:1.5;background:#f9fafb;">
+          <h1 style="color:#ef4444;">Application Error</h1>
+          <p><strong>Message:</strong> ${error instanceof Error ? error.message : 'Unknown error'}</p>
+          <pre style="background:#eee;padding:1rem;border-radius:8px;overflow:auto;max-height:50vh;">${error instanceof Error ? error.stack : JSON.stringify(error, null, 2)}</pre>
+          <p><a href="/">Try going home</a></p>
+        </body>
+      </html>
+    `;
+
+    return new Response(debugHtml, {
       status: 500,
       headers: { "content-type": "text/html; charset=utf-8" },
     });
