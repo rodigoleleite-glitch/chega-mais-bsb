@@ -111,14 +111,14 @@ function Index() {
           <h2 className="text-4xl font-serif font-semibold text-center mb-20 tracking-tight">As Fundadoras</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { name: "Ana Lu", role: "Idealizadora", bio: "Acredita na força dos encontros reais.", quote: "O\u00A0Chega Mais nasceu porque ninguém deveria viver Brasília sozinha." },
-              { name: "Brenda", role: "IDEALIZADORA", bio: "Focada em criar ambientes acolhedores.", quote: "Acolhimento é o nosso maior pilar." },
-              { name: "Clara", role: "IDEALIZADORA", bio: "Curadora de momentos inesquecíveis.", quote: "Cada detalhe importa na nossa conexão." },
-              { name: "Hannah", role: "IDEALIZADORA", bio: "Garante que tudo aconteça com fluidez.", quote: "Chegue como você é, o resto a gente faz." }
+              { name: "Ana Lu", role: "Idealizadora", bio: "Acredita na força dos encontros reais.", quote: "O\u00A0Chega Mais nasceu porque ninguém deveria viver Brasília sozinha.", image: "/imagens/group_portrait.jpg" },
+              { name: "Brenda", role: "IDEALIZADORA", bio: "Focada em criar ambientes acolhedores.", quote: "Acolhimento é o nosso maior pilar.", image: "/imagens/group_portrait.jpg" },
+              { name: "Clara", role: "IDEALIZADORA", bio: "Curadora de momentos inesquecíveis.", quote: "Cada detalhe importa na nossa conexão.", image: "/imagens/group_portrait.jpg" },
+              { name: "Hannah", role: "IDEALIZADORA", bio: "Garante que tudo aconteça com fluidez.", quote: "Chegue como você é, o resto a gente faz.", image: "/imagens/group_portrait.jpg" }
             ].map((f, i) => (
               <motion.div key={i} whileHover={{ y: -10 }} className="group">
                 <div className="h-80 rounded-2xl overflow-hidden mb-6 bg-[#FAF9F8]">
-                  <img src="/imagens/group_portrait.jpg" alt={f.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                  <img src={f.image} alt={f.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                 </div>
                 <h3 className="text-xl font-serif font-bold">{f.name}</h3>
                 <p className="text-[#7A3FF2] text-sm font-bold uppercase mb-2">{f.role}</p>
