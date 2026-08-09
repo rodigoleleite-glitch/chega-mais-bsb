@@ -47,7 +47,7 @@ export function Navbar() {
         <div className={`flex items-center gap-8 font-bold text-sm uppercase tracking-widest ${textColor}`}>
           <Link to="/" className="hover:text-[#7A3FF2] transition-colors">Sobre</Link>
           <Link to="/experiencias" className="hover:text-[#7A3FF2] transition-colors">Experiências</Link>
-          <button className="hover:text-[#7A3FF2] transition-colors cursor-not-allowed opacity-50">Comunidade</button>
+          
         </div>
 
         <Link 
