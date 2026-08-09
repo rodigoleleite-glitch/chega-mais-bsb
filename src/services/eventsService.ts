@@ -30,68 +30,83 @@ const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/1os--AybmZ
 export const fetchEventsFromSheets = createServerFn({ method: "GET" })
   .handler(async () => {
     try {
-      const response = await fetch(GOOGLE_SHEETS_CSV_URL);
-      if (!response.ok) throw new Error("Falha ao buscar dados da planilha");
+      // Usar um timeout curto para evitar que o servidor do Vercel trave se o Google demorar
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+      const response = await fetch(GOOGLE_SHEETS_CSV_URL, { 
+        signal: controller.signal,
+        headers: {
+          'Accept': 'text/csv',
+          'User-Agent': 'Mozilla/5.0 (compatible; ChegaMaisBot/1.0)'
+        }
+      });
+      
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.error(`Planilha retornou status ${response.status}: ${response.statusText}`);
+        return [];
+      }
       
       const csvText = await response.text();
       
-      return new Promise<SheetEvent[]>((resolve, reject) => {
+      if (!csvText || csvText.length < 10) {
+        console.warn("CSV recebido está vazio ou muito curto.");
+        return [];
+      }
+      
+      return new Promise<SheetEvent[]>((resolve) => {
         Papa.parse(csvText, {
           header: true,
           skipEmptyLines: true,
           complete: (results) => {
-            const data = results.data.map((row: any) => {
-              // Função para transformar links do Google Drive em links diretos de imagem
-              // e manter links diretos
-              const formatImageUrl = (url: string) => {
-                if (!url) return "/placeholder.svg";
-                
-                // Prioriza caminho local se o valor na planilha for apenas um nome de arquivo
-                // (não começa com http, https ou /)
-                if (!url.startsWith('http') && !url.startsWith('/')) {
-                  return `/imagens/${url.trim()}`;
-                }
+            const data = results.data
+              .filter((row: any) => row.slug && row.title) // Filtrar linhas inválidas
+              .map((row: any) => {
+                const formatImageUrl = (url: string) => {
+                  if (!url) return "/placeholder.svg";
+                  if (!url.startsWith('http') && !url.startsWith('/')) {
+                    return `/imagens/${url.trim()}`;
+                  }
+                  const driveMatch = url.match(/\/(?:d|file\/d)\/([a-zA-Z0-9_-]+)/);
+                  if (driveMatch && driveMatch[1]) {
+                    return `https://lh3.googleusercontent.com/u/0/d/${driveMatch[1]}`;
+                  }
+                  return url.trim();
+                };
 
-                // Suporte para links do Google Drive
-                const driveMatch = url.match(/\/(?:d|file\/d)\/([a-zA-Z0-9_-]+)/);
-                if (driveMatch && driveMatch[1]) {
-                  return `https://lh3.googleusercontent.com/u/0/d/${driveMatch[1]}`;
-                }
-                
-                return url.trim();
-              };
-
-              // Função para limpar links curtos do Forms
-              const formatFormUrl = (url: string) => {
-                if (!url) return "";
-                return url.trim();
-              };
-
-              return {
-                slug: row.slug || "",
-                featured: String(row.featured).toLowerCase() === 'true',
-                status: row.status === 'encerrado' ? 'encerrado' : 'aberto',
-                title: row.title || "",
-                category: row.category || "",
-                date: row.date || "",
-                time: row.time || "",
-                location: row.location || "",
-                mapsUrl: row.mapsUrl || "",
-                formUrl: formatFormUrl(row.formUrl),
-                image: formatImageUrl(row.image),
-                shortDescription: row.shortDescription || "",
-                description: row.description || "",
-                spots: row.spots || "",
-              };
-            });
+                return {
+                  slug: String(row.slug || "").trim(),
+                  featured: String(row.featured).toLowerCase() === 'true',
+                  status: row.status === 'encerrado' ? 'encerrado' : 'aberto',
+                  title: String(row.title || "").trim(),
+                  category: String(row.category || "").trim(),
+                  date: String(row.date || "").trim(),
+                  time: String(row.time || "").trim(),
+                  location: String(row.location || "").trim(),
+                  mapsUrl: String(row.mapsUrl || "").trim(),
+                  formUrl: String(row.formUrl || "").trim(),
+                  image: formatImageUrl(row.image),
+                  shortDescription: String(row.shortDescription || "").trim(),
+                  description: String(row.description || "").trim(),
+                  spots: String(row.spots || "").trim(),
+                };
+              });
             resolve(data as SheetEvent[]);
           },
-          error: (error: any) => reject(error),
+          error: (error: any) => {
+            console.error("Erro no PapaParse:", error);
+            resolve([]);
+          },
         });
       });
-    } catch (error) {
-      console.error("CRITICAL ERROR FETCHING SHEETS:", error);
-      // Retornar um evento mock para diagnóstico em produção se falhar
+    } catch (error: any) {
+      if (error.name === 'AbortError') {
+        console.error("Timeout ao buscar planilha do Google Sheets");
+      } else {
+        console.error("ERRO CRÍTICO AO BUSCAR PLANILHA:", error);
+      }
       return [];
     }
   });

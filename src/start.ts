@@ -17,6 +17,11 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
       name: error.name
     } : error);
     
+    // In dev, we want to see the error
+    if (import.meta.env.DEV) {
+      throw error;
+    }
+
     return new Response(renderErrorPage(), {
       status: 500,
       headers: { "content-type": "text/html; charset=utf-8" },
