@@ -27,8 +27,16 @@ function Index() {
   const [activeEvents, setActiveEvents] = React.useState<Event[]>([]);
 
   React.useEffect(() => {
-    // Usamos o serviço diretamente no lado do cliente para evitar falhas de SSR em produção
-    getActiveEvents().then(setActiveEvents).catch(err => console.error("Index load error:", err));
+    // Busca os eventos de forma assíncrona no cliente
+    const loadEvents = async () => {
+      try {
+        const events = await getActiveEvents();
+        setActiveEvents(events);
+      } catch (err) {
+        console.error("Erro ao carregar eventos:", err);
+      }
+    };
+    loadEvents();
   }, []);
   const { scrollYProgress } = useScroll();
 
