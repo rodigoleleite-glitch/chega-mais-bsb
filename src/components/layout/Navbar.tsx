@@ -35,7 +35,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <img 
-            src={logoAsset.url} 
+            src="/imagens/logo_purple.jpg" 
             alt="Chega Mais BSB" 
             className="w-10 h-10 rounded-full transition-transform duration-500 group-hover:rotate-12" 
           />
