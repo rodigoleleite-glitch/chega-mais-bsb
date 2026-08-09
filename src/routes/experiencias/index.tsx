@@ -43,6 +43,11 @@ function Experiencias() {
       {/* Grid */}
       <section className="pb-32 px-8">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
+          {activeEvents.length === 0 && (
+            <div className="col-span-full py-20 text-center">
+              <p className="text-xl text-gray-400">Nenhuma experiência encontrada no momento.</p>
+            </div>
+          )}
           {activeEvents.map((e, i) => (
             <motion.div 
               key={e.slug} 
