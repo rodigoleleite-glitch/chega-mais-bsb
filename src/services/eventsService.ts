@@ -1,6 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import Papa from "papaparse";
 
+const isServer = typeof window === 'undefined';
+
+
 // A URL da planilha está correta e retornando dados CSV válidos.
 // Testamos a URL: https://docs.google.com/spreadsheets/d/1os--AybmZh6xiclGfDtB5lqy2bPEQwDlrLDGwsQNQho/gviz/tq?tqx=out:csv
 // O retorno começa com: "slug","featured","status","title",...
@@ -29,12 +32,18 @@ const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/1os--AybmZ
 
 export const fetchEventsFromSheets = createServerFn({ method: "GET" })
   .handler(async () => {
+    // Se for chamado durante a pré-renderização ou SSR no Vercel, retornamos vazio para evitar 500
+    if (isServer && process.env['NODE_ENV'] === 'production') {
+      return [];
+    }
+    
     try {
       // Usar um timeout curto para evitar que o servidor do Vercel trave se o Google demorar
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3000);
 
       const response = await fetch(GOOGLE_SHEETS_CSV_URL, { 
+
         signal: controller.signal,
         headers: {
           'Accept': 'text/csv',
