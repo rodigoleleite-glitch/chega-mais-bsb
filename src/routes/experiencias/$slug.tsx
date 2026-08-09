@@ -20,10 +20,15 @@ function ExperienciaIndividual() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    getEventBySlug(slug).then(res => {
-      setEvent(res);
-      setLoading(false);
-    });
+    getEventBySlug(slug)
+      .then(res => {
+        setEvent(res);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Slug load error:", err);
+        setLoading(false);
+      });
   }, [slug]);
 
   if (loading) {

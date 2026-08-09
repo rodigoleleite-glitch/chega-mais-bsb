@@ -25,7 +25,7 @@ function Experiencias() {
   const [activeEvents, setActiveEvents] = React.useState<Event[]>([]);
 
   React.useEffect(() => {
-    getEvents().then(setActiveEvents);
+    getEvents().then(setActiveEvents).catch(err => console.error("Experiencias load error:", err));
   }, []);
 
   return (
