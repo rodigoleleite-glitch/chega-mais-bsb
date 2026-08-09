@@ -86,7 +86,8 @@ export const fetchEventsFromSheets = createServerFn({ method: "GET" })
         });
       });
     } catch (error) {
-      console.error("Error fetching sheets:", error);
+      console.error("CRITICAL ERROR FETCHING SHEETS:", error);
+      // Retornar um evento mock para diagnóstico em produção se falhar
       return [];
     }
   });

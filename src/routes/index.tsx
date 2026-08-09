@@ -225,6 +225,11 @@ function Index() {
 
           </div>
           <div className="grid md:grid-cols-3 gap-10">
+            {activeEvents.length === 0 && (
+              <div className="col-span-full py-10 text-center">
+                <p className="text-gray-400 italic">Estamos preparando novas experiências...</p>
+              </div>
+            )}
             {activeEvents.map((e, i) => (
               <motion.div key={e.slug} whileHover={{ y: -10 }} className="bg-[#FAF9F8] rounded-[2.5rem] overflow-hidden group shadow-sm hover:shadow-2xl transition-all">
                 <div className="h-72 overflow-hidden relative">
