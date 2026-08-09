@@ -111,10 +111,10 @@ function Index() {
           <h2 className="text-4xl font-serif font-semibold text-center mb-20 tracking-tight">As Fundadoras</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { name: "Ana Lu", role: "Idealizadora", bio: "Acredita na força dos encontros reais.", quote: "O\u00A0Chega Mais nasceu porque ninguém deveria viver Brasília sozinha.", image: "/imagens/group_portrait.jpg" },
-              { name: "Brenda", role: "IDEALIZADORA", bio: "Focada em criar ambientes acolhedores.", quote: "Acolhimento é o nosso maior pilar.", image: "/imagens/group_portrait.jpg" },
-              { name: "Clara", role: "IDEALIZADORA", bio: "Curadora de momentos inesquecíveis.", quote: "Cada detalhe importa na nossa conexão.", image: "/imagens/group_portrait.jpg" },
-              { name: "Hannah", role: "IDEALIZADORA", bio: "Garante que tudo aconteça com fluidez.", quote: "Chegue como você é, o resto a gente faz.", image: "/imagens/group_portrait.jpg" }
+              { name: "Ana Lu", role: "Idealizadora", bio: "Acredita na força dos encontros reais.", quote: "O\u00A0Chega Mais nasceu porque ninguém deveria viver Brasília sozinha.", image: "/imagens/ana_lu.jpg" },
+              { name: "Brenda", role: "IDEALIZADORA", bio: "Focada em criar ambientes acolhedores.", quote: "Acolhimento é o nosso maior pilar.", image: "/imagens/brenda.jpg" },
+              { name: "Clara", role: "IDEALIZADORA", bio: "Curadora de momentos inesquecíveis.", quote: "Cada detalhe importa na nossa conexão.", image: "/imagens/clara.jpg" },
+              { name: "Hannah", role: "IDEALIZADORA", bio: "Garante que tudo aconteça com fluidez.", quote: "Chegue como você é, o resto a gente faz.", image: "/imagens/hannah.jpg" }
             ].map((f, i) => (
               <motion.div key={i} whileHover={{ y: -10 }} className="group">
                 <div className="h-80 rounded-2xl overflow-hidden mb-6 bg-[#FAF9F8]">
