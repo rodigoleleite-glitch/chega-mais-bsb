@@ -33,7 +33,7 @@ const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/1os--AybmZ
 export const fetchEventsFromSheets = createServerFn({ method: "GET" })
   .handler(async () => {
     // Se for chamado durante a pré-renderização ou SSR no Vercel, retornamos vazio para evitar 500
-    if (isServer && process.env.NODE_ENV === 'production') {
+    if (isServer && process.env['NODE_ENV'] === 'production') {
       return [];
     }
     
