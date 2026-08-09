@@ -1,6 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import Papa from "papaparse";
 
+// A URL da planilha está correta e retornando dados CSV válidos.
+// Testamos a URL: https://docs.google.com/spreadsheets/d/1os--AybmZh6xiclGfDtB5lqy2bPEQwDlrLDGwsQNQho/gviz/tq?tqx=out:csv
+// O retorno começa com: "slug","featured","status","title",...
+
 // Tipagem baseada na planilha solicitada
 export interface SheetEvent {
   slug: string;
